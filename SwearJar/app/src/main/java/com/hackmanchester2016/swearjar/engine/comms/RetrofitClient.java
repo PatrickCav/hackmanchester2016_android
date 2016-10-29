@@ -15,20 +15,13 @@ public class RetrofitClient {
     private static RetrofitClient retrofitClient;
     private static NotificationApi api;
 
-    private RetrofitClient() {
+    public RetrofitClient() {
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://fcm.googleapis.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
         api = retrofit.create(NotificationApi.class);
-    }
-
-    public static RetrofitClient getInstance(){
-        if(retrofitClient == null) {
-            retrofitClient = new RetrofitClient();
-        }
-        return retrofitClient;
     }
 
     public NotificationApi getApi(){
