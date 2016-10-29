@@ -27,8 +27,6 @@ public class LaunchFragment extends Fragment {
 
     public static String TAG = "LAUNCH_FRAGMENT";
 
-    private Button loginButton;
-
     public static LaunchFragment newInstance(){
         return new LaunchFragment();
     }

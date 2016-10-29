@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class SetupFragmentPagerAdapter extends FragmentPagerAdapter {
 
     public enum Pages {
+        INFORMATION,
         TEXT,
         VOICE,
         LOCATION,
@@ -24,6 +25,8 @@ public class SetupFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (Pages.values()[position]) {
+            case INFORMATION:
+                return new SetupFragmentInformation();
             case TEXT:
                 return new SetupFragmentText();
             case VOICE:
