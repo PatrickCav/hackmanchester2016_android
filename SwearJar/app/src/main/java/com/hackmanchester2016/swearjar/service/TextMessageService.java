@@ -10,6 +10,13 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.hackmanchester2016.swearjar.engine.Engine;
+import com.hackmanchester2016.swearjar.engine.comms.models.SendTextRequest;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Created by tomr on 29/10/2016.
  */
@@ -42,6 +49,17 @@ public class TextMessageService extends Service {
 
     private void textDetected(String body) {
         // do things here
+        Engine.getInstance().getRetrofitClient().getApi().sendText(Engine.getInstance().getAuthManager().getUserId(), new SendTextRequest(body)).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d(TAG, "SUCCESS");
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d(TAG, "FAIL");
+            }
+        });
     }
 
     private class SMSObserver extends ContentObserver {

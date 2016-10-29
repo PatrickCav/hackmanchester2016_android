@@ -22,8 +22,15 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-        startService(new Intent(this, TextMessageService.class));
+<<<<<<< HEAD
+=======
+        showSignIn();
 
+        startService(new Intent(this, TextMessageService.class));
+    }
+
+    private void showSignIn() {
+>>>>>>> develop
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.launch_fragment_container, new LaunchFragment(), LaunchFragment.TAG)

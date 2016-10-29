@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.hackmanchester2016.swearjar.engine.Engine;
-import com.hackmanchester2016.swearjar.service.TextMessageService;
 import com.hackmanchester2016.swearjar.ui.launch.LaunchFragment;
 
 /**
@@ -21,8 +20,6 @@ public class LaunchActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
-
-        startService(new Intent(this, TextMessageService.class));
 
         getSupportFragmentManager()
                 .beginTransaction()
