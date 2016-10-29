@@ -1,5 +1,6 @@
 package com.hackmanchester2016.swearjar.engine;
 
+import com.hackmanchester2016.swearjar.engine.comms.RetrofitClient;
 import com.hackmanchester2016.swearjar.engine.managers.AuthManager;
 
 /**
@@ -10,6 +11,7 @@ public class Engine {
 
     private static Engine engine;
     private static AuthManager authManager;
+    private static RetrofitClient retrofitClient;
 
     private Engine() {};
 
@@ -24,7 +26,13 @@ public class Engine {
         if(authManager == null) {
             authManager = AuthManager.getInstance();
         }
-
         return authManager;
+    }
+
+    public RetrofitClient getRetrofitClient() {
+        if(retrofitClient == null) {
+            retrofitClient = RetrofitClient.getInstance();
+        }
+        return retrofitClient;
     }
 }
