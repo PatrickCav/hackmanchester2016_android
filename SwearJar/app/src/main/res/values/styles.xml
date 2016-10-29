@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <declare-styleable name="MaterialPageIndicator">
+        <attr name="emptyStateColor" format="color"/>
+        <attr name="filledStateColor" format="color"/>
+        <attr name="indicatorSize" format="dimension"/>
+        <attr name="indicatorSpacing" format="dimension"/>
+    </declare-styleable>
+
 </resources>

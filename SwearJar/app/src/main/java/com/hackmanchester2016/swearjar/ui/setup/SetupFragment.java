@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hackmanchester2016.swearjar.R;
+import com.hackmanchester2016.swearjar.ui.components.MaterialPageIndicator;
 
 /**
  * Created by dant on 29/10/2016.
@@ -19,6 +20,7 @@ public class SetupFragment extends Fragment implements ViewPager.OnPageChangeLis
     public static String TAG = "SETUP_FRAGMENT";
 
     private ViewPager viewPager;
+    private MaterialPageIndicator viewPagerIndicator;
 
     @Nullable
     @Override
@@ -28,6 +30,9 @@ public class SetupFragment extends Fragment implements ViewPager.OnPageChangeLis
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         viewPager.setAdapter(new SetupFragmentPagerAdapter(getChildFragmentManager()));
         viewPager.addOnPageChangeListener(this);
+
+        viewPagerIndicator = (MaterialPageIndicator) view.findViewById(R.id.view_pager_indicator);
+        viewPagerIndicator.setViewPager(viewPager);
 
         return view;
     }

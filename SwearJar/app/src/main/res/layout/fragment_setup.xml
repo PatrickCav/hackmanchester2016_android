@@ -8,4 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <com.hackmanchester2016.swearjar.ui.components.MaterialPageIndicator
+        android:id="@+id/view_pager_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/default_indicator_spacing"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/default_indicator_spacing" />
+
 </FrameLayout>
