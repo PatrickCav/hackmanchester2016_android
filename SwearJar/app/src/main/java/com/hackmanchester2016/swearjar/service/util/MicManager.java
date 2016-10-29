@@ -55,10 +55,6 @@ public class MicManager {
         @Override
         public void onEndOfSpeech() {
             Log.d(TAG, "onEndOfSpeech");
-
-            if(!stopClicked) {
-                startListening();
-            }
         }
 
         @Override
@@ -77,6 +73,10 @@ public class MicManager {
             if(mListener != null && results != null && results.size() > 0) {
                 mListener.onResult(results.get(0));
             }
+
+            if(!stopClicked) {
+                startListening();
+            }
         }
 
         @Override
@@ -91,7 +91,6 @@ public class MicManager {
 
         @Override
         public void onEvent(int i, Bundle bundle) {
-            Log.d(TAG, "onEvent");
         }
     };
 
