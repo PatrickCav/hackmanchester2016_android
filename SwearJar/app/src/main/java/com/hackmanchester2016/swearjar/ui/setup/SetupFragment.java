@@ -16,6 +16,8 @@ import com.hackmanchester2016.swearjar.R;
 
 public class SetupFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
+    public static String TAG = "SETUP_FRAGMENT";
+
     private ViewPager viewPager;
 
     @Nullable
@@ -27,7 +29,7 @@ public class SetupFragment extends Fragment implements ViewPager.OnPageChangeLis
         viewPager.setAdapter(new SetupFragmentPagerAdapter(getChildFragmentManager()));
         viewPager.addOnPageChangeListener(this);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
     // ViewPager.OnPageChangeListener

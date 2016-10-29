@@ -23,8 +23,16 @@ public class SetupFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        // TODO Switch between fragments
-        return null;
+        switch (Pages.values()[position]) {
+            case TEXT:
+                return new SetupFragmentText();
+            case VOICE:
+                return new SetupFragmentVoice();
+            case LOCATION:
+                return new SetupFragmentLocation();
+            default:
+                return null;
+        }
     }
 
     @Override

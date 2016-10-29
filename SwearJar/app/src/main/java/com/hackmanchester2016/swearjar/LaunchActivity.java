@@ -30,7 +30,7 @@ public class LaunchActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void onSignIn() {
+    public void onSignIn() {
         if(Engine.getInstance().getSetupController().setupComplete()) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setData(getIntent().getData());
