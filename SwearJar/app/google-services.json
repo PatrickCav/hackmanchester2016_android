@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "358109610543-klfpemuj70dp41srf6ald31muiirfgn3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hackmanchester2016.swearjar",
+            "certificate_hash": "4C87B260CF65F6420D2E7420CCFF3356F4E589EC"
+          }
+        },
+        {
           "client_id": "358109610543-gmnrto7sak1l62otl6qq620b5b3i9hcj.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358109610543-gmnrto7sak1l62otl6qq620b5b3i9hcj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
