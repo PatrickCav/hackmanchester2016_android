@@ -18,7 +18,7 @@ public class SetupActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.setup_activity);
+        setContentView(R.layout.activity_setup);
 
         findViewById(R.id.sign_in).setOnClickListener(new View.OnClickListener() {
             @Override
