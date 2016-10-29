@@ -9,7 +9,7 @@ public class SwearingStat {
 
     public static SwearingStat testStat(){
         SwearingStat stat = new SwearingStat();
-        stat.numberOfUses = 3;
+        stat.count = 3;
         stat.word = "Shittingballs";
         return stat;
     }
@@ -17,8 +17,12 @@ public class SwearingStat {
     @SerializedName("word")
     public String word;
 
-    @SerializedName("number")
-    public int numberOfUses;
+    @SerializedName("count")
+    public int count;
 
 
+    @Override
+    public String toString() {
+        return word + " count: " + count;
+    }
 }

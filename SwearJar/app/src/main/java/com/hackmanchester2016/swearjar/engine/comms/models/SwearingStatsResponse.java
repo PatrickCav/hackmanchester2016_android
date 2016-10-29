@@ -1,5 +1,7 @@
 package com.hackmanchester2016.swearjar.engine.comms.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  */
 public class SwearingStatsResponse {
 
+    @SerializedName("stats")
     public List<SwearingStat> stats;
 
 }
