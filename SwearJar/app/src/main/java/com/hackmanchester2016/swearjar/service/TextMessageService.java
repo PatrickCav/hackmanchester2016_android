@@ -1,12 +1,9 @@
 package com.hackmanchester2016.swearjar.service;
 
-import android.app.IntentService;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
@@ -20,33 +17,55 @@ import android.util.Log;
 public class TextMessageService extends Service {
 
     private static final String TAG = "MessagingIntentService";
+    private static final String SMS_CONTENT = "content://sms";
 
-    ContentObserver mObserver = new ContentObserver(new Handler()) {
-        @Override
-        public void onChange(boolean selfChange) {
-            super.onChange(selfChange);
-
-            Log.d(TAG, "Message sent or received");
-        }
-    };
+    private ContentObserver mObserver = new SMSObserver(new Handler());
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        ContentResolver contentResolver = getContentResolver();
-        contentResolver.registerContentObserver(Uri.parse("content://sms"), true, mObserver);
-
         return null;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        getContentResolver().registerContentObserver(Uri.parse(SMS_CONTENT), true, mObserver);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         getContentResolver().unregisterContentObserver(mObserver);
+    }
+
+    private void textDetected(String body) {
+        // do things here
+    }
+
+    private class SMSObserver extends ContentObserver {
+
+        SMSObserver(Handler handler){
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            try (Cursor cur = getContentResolver().query(Uri.parse(SMS_CONTENT), null, null, null, null)) {
+                cur.moveToNext(); // Assume they have some messages haha banter
+
+                String protocol = cur.getString(cur.getColumnIndex("protocol"));
+
+                if (protocol == null) {
+                    String body = cur.getString(cur.getColumnIndex("body"));
+                    textDetected(body);
+                }
+
+                cur.close();
+            } catch (Exception ex) {
+                Log.d(TAG, "Fuck you");
+            }
+        }
     }
 }
