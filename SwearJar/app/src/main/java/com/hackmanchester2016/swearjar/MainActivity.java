@@ -7,13 +7,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.service.TextMessageService;
 import com.hackmanchester2016.swearjar.ui.home.HomeFragment;
 import com.hackmanchester2016.swearjar.ui.launch.LaunchFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PUBLIC_STATIC = null;
+    private static final String PUBLIC_STATIC_ = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,5 +34,14 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.container, HomeFragment.newInstance(), HomeFragment.TAG)
                 .commit();
+    }
+
+    public void logout(){
+        Engine.getInstance().getAuthManager().signOut();
+        Intent intent = new Intent(this, LaunchActivity.class);
+        intent.setData(getIntent().getData());
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 }

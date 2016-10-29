@@ -10,7 +10,7 @@
 
     <style name="LoginTheme" parent="FirebaseUI">
         <item name="android:windowBackground">@drawable/login_background</item>
-	<style>
+	</style>
 
     <declare-styleable name="MaterialPageIndicator">
         <attr name="emptyStateColor" format="color"/>

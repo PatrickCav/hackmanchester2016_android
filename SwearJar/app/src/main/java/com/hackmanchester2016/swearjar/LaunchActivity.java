@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.firebase.ui.auth.AuthUI;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.service.TextMessageService;
 import com.hackmanchester2016.swearjar.ui.home.HomeFragment;
