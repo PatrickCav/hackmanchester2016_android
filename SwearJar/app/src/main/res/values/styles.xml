@@ -24,4 +24,10 @@
         <item name="android:alpha">0.4</item>
     </style>
 
+    <style name="SetupText">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
 </resources>

@@ -6,6 +6,7 @@ import com.hackmanchester2016.swearjar.engine.comms.RetrofitClient;
 import com.hackmanchester2016.swearjar.engine.controllers.SetupController;
 import com.hackmanchester2016.swearjar.engine.managers.AuthManager;
 import com.hackmanchester2016.swearjar.engine.managers.FineManager;
+import com.hackmanchester2016.swearjar.engine.managers.UserManager;
 
 /**
  * Created by dant on 29/10/2016.
@@ -17,6 +18,7 @@ public class Engine {
 
     private AuthManager authManager;
     private RetrofitClient retrofitClient;
+    private UserManager userManager;
     private SetupController setupController;
     private FineManager fineManager;
 
@@ -24,7 +26,7 @@ public class Engine {
 
     private Engine(Context context) {
         this.context = context;
-    };
+    }
 
     public static void initialize(Context context) {
         if(engine == null) {
@@ -65,5 +67,12 @@ public class Engine {
             fineManager = new FineManager(context);
         }
         return fineManager;
+    }
+
+    public UserManager getUserManager(){
+        if(userManager == null){
+            userManager = new UserManager();
+        }
+        return userManager;
     }
 }

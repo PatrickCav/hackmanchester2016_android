@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.hackmanchester2016.swearjar.R;
 import com.hackmanchester2016.swearjar.SetupActivity;
+import com.hackmanchester2016.swearjar.engine.Engine;
 
 /**
  * Created by dant on 29/10/2016.
@@ -34,6 +35,7 @@ public class SetupFragmentLocation extends Fragment {
         @Override
         public void onClick(View view) {
             if(getActivity() instanceof SetupActivity) {
+                Engine.getInstance().getSetupController().setupComplete();
                 ((SetupActivity)getActivity()).setupComplete();
             }
         }
