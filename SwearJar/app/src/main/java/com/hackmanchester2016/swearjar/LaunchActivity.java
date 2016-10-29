@@ -12,6 +12,7 @@ import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.service.TextMessageService;
 import com.hackmanchester2016.swearjar.ui.home.HomeFragment;
 import com.hackmanchester2016.swearjar.ui.launch.LaunchFragment;
+import com.hackmanchester2016.swearjar.ui.setup.SetupFragment;
 
 /**
  * Created by dant on 29/10/2016.
@@ -26,19 +27,14 @@ public class LaunchActivity extends AppCompatActivity {
 
         startService(new Intent(this, TextMessageService.class));
 
-        Fragment initialFragment;
-
         if(Engine.getInstance().getAuthManager().isSignedIn()){
-           initialFragment = HomeFragment.newInstance();
+            onSignIn();
         } else {
-            initialFragment = LaunchFragment.newInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.launch_fragment_container, LaunchFragment.newInstance(), null)
+                    .commit();
         }
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.launch_fragment_container, initialFragment, null)
-                .commit();
-
     }
 
     public void onSignIn() {
