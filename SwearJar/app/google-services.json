@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "358109610543",
+    "firebase_url": "https://swearjar-9d026.firebaseio.com",
+    "project_id": "swearjar-9d026",
+    "storage_bucket": "swearjar-9d026.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358109610543:android:4a05e4d40c67893b",
+        "android_client_info": {
+          "package_name": "com.hackmanchester2016.swearjar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358109610543-gmnrto7sak1l62otl6qq620b5b3i9hcj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqyyTNuJCTuGOkzJ2scHxY8NLbJKioRr0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
