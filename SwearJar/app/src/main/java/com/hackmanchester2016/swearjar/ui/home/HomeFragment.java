@@ -6,10 +6,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hackmanchester2016.swearjar.MainActivity;
 import com.hackmanchester2016.swearjar.R;
+import com.hackmanchester2016.swearjar.engine.Engine;
 
 /**
  * Created by patrickc on 29/10/2016
@@ -23,6 +28,12 @@ public class HomeFragment extends Fragment {
 
     public static HomeFragment newInstance(){
         return new HomeFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -40,6 +51,21 @@ public class HomeFragment extends Fragment {
 
         viewPager.setAdapter(new HomePagerAdapter(getFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.home_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.sign_out:
+                ((MainActivity) getActivity()).logout();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

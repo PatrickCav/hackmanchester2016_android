@@ -23,7 +23,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class LaunchFragment extends Fragment {
 
-    private static final int RC_SIGN_IN = 42;
+    private static final int RC_SIGN_IN = 420;
 
     public static String TAG = "LAUNCH_FRAGMENT";
 
@@ -33,29 +33,17 @@ public class LaunchFragment extends Fragment {
         return new LaunchFragment();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_launch, container, false);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setTheme(R.style.LoginTheme)
+                        .setProviders(AuthUI.GOOGLE_PROVIDER)
+                        .build(), RC_SIGN_IN);
 
-        loginButton = (Button) view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(loginClickListener);
-
-        return view;
+        super.onCreate(savedInstanceState);
     }
-
-    private Button.OnClickListener loginClickListener = new Button.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setTheme(R.style.LoginTheme)
-                            .setProviders(AuthUI.GOOGLE_PROVIDER)
-                            .build(), RC_SIGN_IN);
-        }
-    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

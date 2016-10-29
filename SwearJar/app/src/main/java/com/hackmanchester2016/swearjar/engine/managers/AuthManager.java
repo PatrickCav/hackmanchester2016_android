@@ -8,8 +8,6 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class AuthManager {
 
-    public AuthManager(){}
-
     public boolean isSignedIn(){
         return FirebaseAuth.getInstance().getCurrentUser() != null;
     }
@@ -21,5 +19,9 @@ public class AuthManager {
         } else{
             return null;
         }
+    }
+
+    public void signOut(){
+        FirebaseAuth.getInstance().signOut();
     }
 }
