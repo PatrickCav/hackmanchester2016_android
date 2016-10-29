@@ -23,7 +23,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class LaunchFragment extends Fragment {
 
-    private static final int RC_SIGN_IN = 42;
+    private static final int RC_SIGN_IN = 420;
 
     public static String TAG = "LAUNCH_FRAGMENT";
 
