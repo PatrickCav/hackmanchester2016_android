@@ -1,6 +1,9 @@
 package com.hackmanchester2016.swearjar.engine;
 
+import android.content.Context;
+
 import com.hackmanchester2016.swearjar.engine.comms.RetrofitClient;
+import com.hackmanchester2016.swearjar.engine.controllers.SetupController;
 import com.hackmanchester2016.swearjar.engine.managers.AuthManager;
 
 /**
@@ -10,29 +13,48 @@ import com.hackmanchester2016.swearjar.engine.managers.AuthManager;
 public class Engine {
 
     private static Engine engine;
-    private static AuthManager authManager;
-    private static RetrofitClient retrofitClient;
 
-    private Engine() {};
+    private AuthManager authManager;
+    private RetrofitClient retrofitClient;
+    private SetupController setupController;
+
+    private final Context context;
+
+    private Engine(Context context) {
+        this.context = context;
+    };
+
+    public static void initialize(Context context) {
+        if(engine == null) {
+            engine = new Engine(context);
+        }
+    }
 
     public static Engine getInstance() {
         if(engine == null) {
-            engine = new Engine();
+            throw new RuntimeException("You must call initialize() before you call getInstance()");
         }
         return engine;
     }
 
     public AuthManager getAuthManager() {
         if(authManager == null) {
-            authManager = AuthManager.getInstance();
+            authManager = new AuthManager();
         }
         return authManager;
     }
 
     public RetrofitClient getRetrofitClient() {
         if(retrofitClient == null) {
-            retrofitClient = RetrofitClient.getInstance();
+            retrofitClient = new RetrofitClient();
         }
         return retrofitClient;
+    }
+
+    public SetupController getSetupController() {
+        if(setupController == null) {
+            setupController = new SetupController(context);
+        }
+        return setupController;
     }
 }

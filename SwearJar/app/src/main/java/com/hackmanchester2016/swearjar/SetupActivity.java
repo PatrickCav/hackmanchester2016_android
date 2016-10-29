@@ -1,4 +1,4 @@
-package com.hackmanchester2016.swearjar.ui.setup;
+package com.hackmanchester2016.swearjar;
 
 import android.content.Context;
 import android.os.Bundle;
