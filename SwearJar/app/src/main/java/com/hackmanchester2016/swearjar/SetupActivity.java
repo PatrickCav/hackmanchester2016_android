@@ -29,6 +29,10 @@ public class SetupActivity extends AppCompatActivity {
 
     }
 
+    private void refreshFragment() {
+
+    }
+
     private void signIn(){
 
     }
