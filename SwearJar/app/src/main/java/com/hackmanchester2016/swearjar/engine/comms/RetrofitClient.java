@@ -39,17 +39,12 @@ public class RetrofitClient {
             public Response intercept(Chain chain) throws IOException {
 
                 Request original = chain.request();
-                HttpUrl originalHttpUrl = original.url();
 
-                HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("Authorization", Engine.getInstance().getAuthManager().getUserId())
+                Request request = original.newBuilder()
+                        .header("Authorization", Engine.getInstance().getAuthManager().getUserId())
+                        .method(original.method(), original.body())
                         .build();
 
-                // Request customization: add request headers
-                Request.Builder requestBuilder = original.newBuilder()
-                        .url(url);
-
-                Request request = requestBuilder.build();
                 return chain.proceed(request);
             }
         });
@@ -72,7 +67,7 @@ public class RetrofitClient {
         @POST("prod/detect/text")
         Call<Void> sendText(@Body SendTextRequest body);
 
-        @GET("prod/stats")
+        @GET("prod/search/text")
         Call<SwearingStatsResponse> getStats();
 
     }
