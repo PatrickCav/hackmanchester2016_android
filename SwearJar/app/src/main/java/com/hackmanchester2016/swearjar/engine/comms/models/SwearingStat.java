@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by patrickc on 29/10/2016
  */
-public class SwearingStat {
+public class SwearingStat implements Comparable<SwearingStat>{
 
     public static SwearingStat testStat(){
         SwearingStat stat = new SwearingStat();
@@ -24,5 +24,10 @@ public class SwearingStat {
     @Override
     public String toString() {
         return word + " count: " + count;
+    }
+
+    @Override
+    public int compareTo(SwearingStat o) {
+        return o.count - count;
     }
 }
