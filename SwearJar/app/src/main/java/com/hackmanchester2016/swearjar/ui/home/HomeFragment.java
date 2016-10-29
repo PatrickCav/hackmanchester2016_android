@@ -34,6 +34,8 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        Engine.getInstance().getUserManager().updateCurrentUser();
     }
 
     @Nullable

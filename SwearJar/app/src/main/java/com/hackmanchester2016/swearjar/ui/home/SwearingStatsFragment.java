@@ -1,7 +1,6 @@
 package com.hackmanchester2016.swearjar.ui.home;
 
 import android.animation.ObjectAnimator;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
