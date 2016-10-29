@@ -15,6 +15,7 @@ import com.hackmanchester2016.swearjar.ui.launch.LaunchFragment;
 public class MainActivity extends AppCompatActivity {
 
     private static final String PUBLIC_STATIC_ = null;
+    private static final int REQUEST_CODE = 1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +26,9 @@ public class MainActivity extends AppCompatActivity {
                 && ContextCompat.checkSelfPermission(getBaseContext(), "android.permission.READ_PHONE_STATE") == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(getBaseContext(), "android.permission.PROCESS_OUTGOING_CALLS") == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(getBaseContext(), "android.permission.RECORD_AUDIO") == PackageManager.PERMISSION_GRANTED) {
-            Intent i = new Intent(this, TextMessageService.class);
-            startService(i);
+            startServices();
         } else {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{"android.permission.READ_SMS", "android.permission.READ_PHONE_STATE", "android.permission.PROCESS_OUTGOING_CALLS", "android.permission.RECORD_AUDIO"}, 0);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{"android.permission.READ_SMS", "android.permission.READ_PHONE_STATE", "android.permission.PROCESS_OUTGOING_CALLS", "android.permission.RECORD_AUDIO"}, REQUEST_CODE);
         }
 
         getSupportFragmentManager()
@@ -39,10 +39,37 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout(){
         Engine.getInstance().getAuthManager().signOut();
+        stopServices();
+
         Intent intent = new Intent(this, LaunchActivity.class);
         intent.setData(getIntent().getData());
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
+
+    private void startServices() {
+        startService(new Intent(this, TextMessageService.class));
+    }
+
+    private void stopServices() {
+        stopService(new Intent(this, TextMessageService.class));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE: {
+                for(int result : grantResults) {
+                    if(result != PackageManager.PERMISSION_GRANTED) {
+                        return; // fuck em
+                    }
+                }
+
+                startServices();
+            }
+        }
+    }
+
+
 }
