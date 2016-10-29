@@ -41,7 +41,7 @@ public class CallListeningService extends Service {
             public void onResult(String result) {
                 Log.d(TAG, result);
                 // Server request here
-                Engine.getInstance().getRetrofitClient().getApi().sendText(Engine.getInstance().getAuthManager().getUserId(), new SendTextRequest(result)).enqueue(new Callback<Void>() {
+                Engine.getInstance().getRetrofitClient().getApi().sendText(new SendTextRequest(result)).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
 

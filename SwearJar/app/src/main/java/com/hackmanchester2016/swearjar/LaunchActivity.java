@@ -3,12 +3,14 @@ package com.hackmanchester2016.swearjar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.service.TextMessageService;
+import com.hackmanchester2016.swearjar.ui.home.HomeFragment;
 import com.hackmanchester2016.swearjar.ui.launch.LaunchFragment;
 
 /**
@@ -24,10 +26,19 @@ public class LaunchActivity extends AppCompatActivity {
 
         startService(new Intent(this, TextMessageService.class));
 
+        Fragment initialFragment;
+
+        if(Engine.getInstance().getAuthManager().isSignedIn()){
+           initialFragment = HomeFragment.newInstance();
+        } else {
+            initialFragment = LaunchFragment.newInstance();
+        }
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.launch_fragment_container, new LaunchFragment(), LaunchFragment.TAG)
+                .replace(R.id.launch_fragment_container, initialFragment, null)
                 .commit();
+
     }
 
     public void onSignIn() {

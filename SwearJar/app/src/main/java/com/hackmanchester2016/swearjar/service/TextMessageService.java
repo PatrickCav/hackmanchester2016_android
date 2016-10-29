@@ -48,8 +48,8 @@ public class TextMessageService extends Service {
     }
 
     private void textDetected(String body) {
-        // do things here
-        Engine.getInstance().getRetrofitClient().getApi().sendText(Engine.getInstance().getAuthManager().getUserId(), new SendTextRequest(body)).enqueue(new Callback<Void>() {
+        // do things here (nah)
+        Engine.getInstance().getRetrofitClient().getApi().sendText(new SendTextRequest(body)).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Log.d(TAG, "SUCCESS");

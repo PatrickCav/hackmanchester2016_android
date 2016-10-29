@@ -2,12 +2,22 @@ package com.hackmanchester2016.swearjar.engine.comms;
 
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.SendTextRequest;
+import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStat;
+import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStatsResponse;
 import com.hackmanchester2016.swearjar.engine.managers.AuthManager;
 
+import java.io.IOException;
+
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -17,11 +27,36 @@ import retrofit2.http.POST;
  */
 
 public class RetrofitClient {
-    private static RetrofitClient retrofitClient;
+
     private static SwearyApi api;
 
     public RetrofitClient() {
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+
+                Request original = chain.request();
+                HttpUrl originalHttpUrl = original.url();
+
+                HttpUrl url = originalHttpUrl.newBuilder()
+                        .addQueryParameter("Authorization", Engine.getInstance().getAuthManager().getUserId())
+                        .build();
+
+                // Request customization: add request headers
+                Request.Builder requestBuilder = original.newBuilder()
+                        .url(url);
+
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
+            }
+        });
+
+
         Retrofit retrofit = new Retrofit.Builder()
+            .client(httpClient.build())
             .baseUrl("https://n43au9qkce.execute-api.us-west-2.amazonaws.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
@@ -35,6 +70,10 @@ public class RetrofitClient {
 
     public interface SwearyApi {
         @POST("prod/detect/text")
-        Call<Void> sendText(@Header("Authorization") String id, @Body SendTextRequest body);
+        Call<Void> sendText(@Body SendTextRequest body);
+
+        @GET("prod/stats")
+        Call<SwearingStatsResponse> getStats();
+
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Swear Jar</string>
+    <string name="your_total_fines">Your fines so far...</string>
 </resources>

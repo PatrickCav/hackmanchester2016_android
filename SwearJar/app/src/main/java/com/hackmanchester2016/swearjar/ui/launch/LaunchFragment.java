@@ -29,6 +29,10 @@ public class LaunchFragment extends Fragment {
 
     private Button loginButton;
 
+    public static LaunchFragment newInstance(){
+        return new LaunchFragment();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class LaunchFragment extends Fragment {
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
+                            .setTheme(R.style.LoginTheme)
                             .setProviders(AuthUI.GOOGLE_PROVIDER)
                             .build(), RC_SIGN_IN);
         }

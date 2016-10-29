@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.hackmanchester2016.swearjar.service.TextMessageService;
+import com.hackmanchester2016.swearjar.ui.home.HomeFragment;
+import com.hackmanchester2016.swearjar.ui.launch.LaunchFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,5 +28,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{"android.permission.READ_SMS", "android.permission.READ_PHONE_STATE", "android.permission.PROCESS_OUTGOING_CALLS"}, 0);
         }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, HomeFragment.newInstance(), HomeFragment.TAG)
+                .commit();
     }
 }
