@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <com.hackmanchester2016.swearjar.ui.components.MaterialPageIndicator
+        android:id="@+id/view_pager_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/default_indicator_spacing"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/default_indicator_spacing"
+        app:filledStateColor="@color/colorAccent" />
 
 </FrameLayout>
