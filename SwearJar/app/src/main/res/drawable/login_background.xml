@@ -5,7 +5,7 @@
 
     <item android:top="120dp">
         <bitmap
-            android:src="@drawable/messenger_bubble_large_blue"
+            android:src="@drawable/icon"
             android:gravity="top|center_horizontal" />
     </item>
 
