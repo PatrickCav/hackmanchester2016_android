@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,6 @@ import retrofit2.Response;
 public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "SwearingStats";
-
-    private static final double FINE_CONVERSION = 137.035999;
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView totalFines;
@@ -91,9 +90,11 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void setTotalFine(int totalTimesSworn){
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        int fine = Engine.getInstance().getFineManager().calculateFine(totalTimesSworn);
 
         totalFines.setVisibility(View.VISIBLE);
-        totalFines.setText(formatter.format((FINE_CONVERSION/100) * totalTimesSworn));
+        totalFines.setText(Engine.getInstance().getFineManager().getFormattedFine(fine));
+
+        Engine.getInstance().getFineManager().setFineValue(fine);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.hackmanchester2016.swearjar.engine.comms.RetrofitClient;
 import com.hackmanchester2016.swearjar.engine.controllers.SetupController;
 import com.hackmanchester2016.swearjar.engine.managers.AuthManager;
+import com.hackmanchester2016.swearjar.engine.managers.FineManager;
 
 /**
  * Created by dant on 29/10/2016.
@@ -17,6 +18,7 @@ public class Engine {
     private AuthManager authManager;
     private RetrofitClient retrofitClient;
     private SetupController setupController;
+    private FineManager fineManager;
 
     private final Context context;
 
@@ -56,5 +58,12 @@ public class Engine {
             setupController = new SetupController(context);
         }
         return setupController;
+    }
+
+    public FineManager getFineManager() {
+        if(fineManager == null) {
+            fineManager = new FineManager(context);
+        }
+        return fineManager;
     }
 }
