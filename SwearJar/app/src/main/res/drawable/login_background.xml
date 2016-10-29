@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<item android:drawable="@mipmap/cool_photo"/>-->
+    <item android:drawable="@drawable/setup_text_bg"/>
 
-    <!--<item android:top="120dp">-->
-        <!--<bitmap-->
-            <!--android:src="@mipmap/your_logo"-->
-            <!--android:gravity="top|center_horizontal" />-->
-    <!--</item>-->
+    <item android:top="120dp">
+        <bitmap
+            android:src="@drawable/messenger_bubble_large_blue"
+            android:gravity="top|center_horizontal" />
+    </item>
 
 </layer-list>
