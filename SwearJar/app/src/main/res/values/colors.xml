@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
     <color name="unselected_tab">#d6d6d6</color>
 
     <color name="main_text">#333333</color>
 
     <color name="light_grey">#ededed</color>
+
+
+    <color name="colorPrimary">#484BAC</color>
+    <color name="colorPrimaryDark">#2E3192</color>
+    <color name="colorSecondary">#00B9F4</color>
+    <color name="colorSecondaryDark">#00A0DB</color>
+    <color name="colorAccent">#EC0085</color>
 
 </resources>

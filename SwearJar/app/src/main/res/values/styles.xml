@@ -10,6 +10,18 @@
 
     <style name="LoginTheme" parent="FirebaseUI">
         <item name="android:windowBackground">@drawable/login_background</item>
+	<style>
+
+    <declare-styleable name="MaterialPageIndicator">
+        <attr name="emptyStateColor" format="color"/>
+        <attr name="filledStateColor" format="color"/>
+        <attr name="indicatorSize" format="dimension"/>
+        <attr name="indicatorSpacing" format="dimension"/>
+    </declare-styleable>
+    
+    <style name="SetupBackground">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:alpha">0.4</item>
     </style>
 
 </resources>
