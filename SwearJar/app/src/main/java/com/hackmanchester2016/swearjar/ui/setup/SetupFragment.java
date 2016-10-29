@@ -15,7 +15,7 @@ import com.hackmanchester2016.swearjar.ui.components.MaterialPageIndicator;
  * Created by dant on 29/10/2016.
  */
 
-public class SetupFragment extends Fragment implements ViewPager.OnPageChangeListener {
+public class SetupFragment extends Fragment implements ViewPager.OnPageChangeListener, ViewPager.PageTransformer {
 
     public static String TAG = "SETUP_FRAGMENT";
 
@@ -30,6 +30,7 @@ public class SetupFragment extends Fragment implements ViewPager.OnPageChangeLis
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         viewPager.setAdapter(new SetupFragmentPagerAdapter(getChildFragmentManager()));
         viewPager.addOnPageChangeListener(this);
+        viewPager.setPageTransformer(true, this);
 
         viewPagerIndicator = (MaterialPageIndicator) view.findViewById(R.id.view_pager_indicator);
         viewPagerIndicator.setViewPager(viewPager);
@@ -52,5 +53,20 @@ public class SetupFragment extends Fragment implements ViewPager.OnPageChangeLis
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    // ViewPager.PageTransformer
+
+    @Override
+    public void transformPage(View page, float position) {
+        int pageWidth = page.getWidth();
+
+        if (position < -1) {
+            page.setAlpha(1);
+        } else if (position <= 1) {
+            page.findViewById(R.id.background).setTranslationX(-position * (pageWidth / 2)); //Half the normal speed
+        } else {
+            page.setAlpha(1);
+        }
     }
 }
