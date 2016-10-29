@@ -15,12 +15,13 @@ public class AuthManager {
     }
 
     public String getUserId(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null){
-            return user.getUid();
-        } else{
-            return null;
-        }
+        return "e71dd60d-161d-4bf2-b1b2-2a15245fd144";
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if(user != null){
+//            return user.getUid();
+//        } else{
+//            return null;
+//        }
     }
 
 }

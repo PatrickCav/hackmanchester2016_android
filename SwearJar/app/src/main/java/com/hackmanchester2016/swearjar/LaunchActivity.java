@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hackmanchester2016.swearjar.engine.Engine;
+import com.hackmanchester2016.swearjar.service.TextMessageService;
 import com.hackmanchester2016.swearjar.ui.launch.LaunchFragment;
 
 /**
@@ -21,6 +22,8 @@ public class LaunchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launch);
 
         showSignIn();
+
+        startService(new Intent(this, TextMessageService.class));
     }
 
     private void showSignIn() {
