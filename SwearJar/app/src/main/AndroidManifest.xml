@@ -3,6 +3,7 @@
     package="com.hackmanchester2016.swearjar">
     
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="FLda2g91GrlZLI9DBt0dCFrPO"
+            />
         
 
         <activity android:name=".MainActivity">
