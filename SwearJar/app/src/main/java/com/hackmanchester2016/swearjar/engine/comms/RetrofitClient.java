@@ -1,6 +1,9 @@
 package com.hackmanchester2016.swearjar.engine.comms;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.hackmanchester2016.swearjar.engine.Engine;
+import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
 import com.hackmanchester2016.swearjar.engine.comms.models.ChallengeResponse;
 import com.hackmanchester2016.swearjar.engine.comms.models.SendTextRequest;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStat;
@@ -24,6 +27,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by the idiot dant on 29/10/2016.
@@ -52,11 +56,14 @@ public class RetrofitClient {
             }
         });
 
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
             .client(httpClient.build())
             .baseUrl("https://n43au9qkce.execute-api.us-west-2.amazonaws.com")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
         api = retrofit.create(SwearyApi.class);
@@ -71,8 +78,12 @@ public class RetrofitClient {
         Call<Void> sendText(@Body SendTextRequest body);
 
         @GET("prod/search/text")
-        Call<SwearingStatsResponse> getStats();
-        @GET("prod/challenge")
+        Call<SwearingStatsResponse> getStats(@Query("challengeId") String id);
+
+        @POST("prod/challenge")
+        Call<Void> createChallenge(@Body Challenge challenge);
+
+        @GET("prod/challange")
         Call<ChallengeResponse> getChallenges();
 
     }

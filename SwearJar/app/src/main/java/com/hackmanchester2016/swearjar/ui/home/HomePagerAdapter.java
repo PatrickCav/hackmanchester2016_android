@@ -12,7 +12,7 @@ import com.hackmanchester2016.swearjar.ui.challenges.ChallengesFragment;
 public class HomePagerAdapter extends FragmentPagerAdapter {
 
     public enum Pages {
-        STATS,
+//        STATS,
         CHALLENGES,
         COUNT
     }
@@ -24,8 +24,8 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (Pages.values()[position]){
-            case STATS:
-                return "Stats";
+//            case STATS:
+//                return "Stats";
             case CHALLENGES:
                 return "Challenges";
             default:
@@ -36,8 +36,8 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (Pages.values()[position]){
-            case STATS:
-                return SwearingStatsFragment.newInstance();
+//            case STATS:
+//                return SwearingStatsFragment.newInstance();
             case CHALLENGES:
                 return new ChallengesFragment();
             default:

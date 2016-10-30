@@ -74,7 +74,7 @@ public class FineManager {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.icon)
-                        .setContentTitle("You twat")
+                        .setContentTitle("Wash your mouth out with soap!")
                         .setContentText("You swore! And it cost you " + getFormattedFine(charge));
 
         Intent resultIntent = new Intent(context, LaunchActivity.class);
@@ -97,7 +97,7 @@ public class FineManager {
     }
 
     public void calculateFineDifference() {
-        Engine.getInstance().getRetrofitClient().getApi().getStats().enqueue(new Callback<SwearingStatsResponse>() {
+        Engine.getInstance().getRetrofitClient().getApi().getStats("asdfafd").enqueue(new Callback<SwearingStatsResponse>() {
             @Override
             public void onResponse(Call<SwearingStatsResponse> call, Response<SwearingStatsResponse> response) {
                 List<SwearingStat> stats = response.body().stats;

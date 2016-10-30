@@ -26,18 +26,17 @@ import retrofit2.Response;
  * Created by dant on 30/10/2016.
  */
 
-public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ChallengesAdapter.ChallengesCallback{
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private FloatingActionButton addChallengeButton;
 
-    private ChallengesFragmentPagerAdapter adapter;
+    private ChallengesAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        adapter = new ChallengesFragmentPagerAdapter();
-
+        adapter = new ChallengesAdapter(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -53,7 +52,7 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
         recyclerView.setAdapter(adapter);
 
         addChallengeButton = (FloatingActionButton) view.findViewById(R.id.add_challenge);
-        addChallengeButton.setOnClickListener(addChallangeListener);
+        addChallengeButton.setOnClickListener(addChallengeListener);
 
         return view;
     }
@@ -93,7 +92,7 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
         requestChallenges();
     }
 
-    private FloatingActionButton.OnClickListener addChallangeListener = new FloatingActionButton.OnClickListener() {
+    private FloatingActionButton.OnClickListener addChallengeListener = new FloatingActionButton.OnClickListener() {
         @Override
         public void onClick(View view) {
             if(getActivity() instanceof MainActivity) {
@@ -102,4 +101,9 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
             }
         }
     };
+
+    @Override
+    public void viewChallengeDetails(Challenge challenge) {
+
+    }
 }

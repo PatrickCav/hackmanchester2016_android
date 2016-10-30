@@ -13,7 +13,4 @@ public class ChallengeResponse {
     @SerializedName("results")
     public List<Challenge> results;
 
-    public List<Challenge> getResults() {
-        return results;
-    }
 }

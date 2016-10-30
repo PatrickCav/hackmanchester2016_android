@@ -40,12 +40,31 @@
                     android:background="@drawable/rounded_outline"
                     android:padding="8dp"/>
 
-                <com.hackmanchester2016.swearjar.ui.home.MoneyBagsView
-                    android:id="@+id/money_bags_view"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/total_fines_text"
-                    android:layout_alignParentBottom="true"/>
+                    android:layout_alignParentBottom="true">
+
+                    <com.hackmanchester2016.swearjar.ui.home.MoneyBagsView
+                        android:id="@+id/money_bags_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp"
+                        android:background="@drawable/shadow_gradient_down_grey"
+                        android:layout_gravity="bottom"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp"
+                        android:background="@drawable/shadow_gradient_up_grey"/>
+
+                </FrameLayout>
+
+
 
             </RelativeLayout>
 
