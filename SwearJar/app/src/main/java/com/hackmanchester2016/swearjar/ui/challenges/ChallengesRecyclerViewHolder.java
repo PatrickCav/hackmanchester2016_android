@@ -36,7 +36,6 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
         daysRemaining = (TextView) itemView.findViewById(R.id.days_remaining);
 
         clickableForeground = itemView.findViewById(R.id.selectable_foreground);
-
     }
 
     public void setChallenge(Challenge challenge) {
