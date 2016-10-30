@@ -23,7 +23,9 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesRecyclerVi
     }
 
     public void setChallenges(List<Challenge> challenges) {
-        this.challenges = new ArrayList<>(challenges);
+        if(challenges != null) {
+            this.challenges = new ArrayList<>(challenges);
+        }
     }
 
     @Override

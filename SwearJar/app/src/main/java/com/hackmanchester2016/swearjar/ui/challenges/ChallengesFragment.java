@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,7 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
         swipeRefreshLayout.setOnRefreshListener(this);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
         addChallengeButton = (FloatingActionButton) view.findViewById(R.id.add_challenge);
@@ -72,7 +74,6 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
 
     private void requestChallenges() {
         Engine.getInstance().getRetrofitClient().getApi().getChallenges().enqueue(new Callback<ChallengeResponse>() {
-
             @Override
             public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
                 swipeRefreshLayout.setRefreshing(false);
