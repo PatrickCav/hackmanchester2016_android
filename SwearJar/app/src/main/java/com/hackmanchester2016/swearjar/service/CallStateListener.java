@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.hackmanchester2016.swearjar.engine.Engine;
-import com.hackmanchester2016.swearjar.service.util.MicManager;
 import com.hackmanchester2016.swearjar.service.util.PhoneCallReceiver;
 
 import java.util.Date;

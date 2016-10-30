@@ -1,5 +1,7 @@
 package com.hackmanchester2016.swearjar.ui.home;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +24,7 @@ import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStat;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStatsResponse;
+import com.hackmanchester2016.swearjar.engine.managers.FineManager;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -35,7 +38,7 @@ import retrofit2.Response;
 /**
  * Created by patrickc on 29/10/2016
  */
-public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, FineManager.FineListener {
 
     private static final String TAG = "SwearingStats";
 
@@ -52,6 +55,8 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
     private Challenge challenge;
 
+    private int totalFine = 0;
+
     public static SwearingStatsFragment newInstance(Challenge challenge){
         SwearingStatsFragment fragment = new SwearingStatsFragment();
         Bundle bundle = new Bundle();
@@ -66,6 +71,33 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
         Bundle args = getArguments();
         challenge = (Challenge) args.getSerializable(CHALLENGE_ID);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Engine.getInstance().getFineManager().setFineListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Engine.getInstance().getFineManager().removeListener();
+    }
+
+    @Override
+    public void fineUpdated() {
+        Engine.getInstance().getRetrofitClient().getApi().getSwearingStats(DateUtils.formatDate(challenge.fromDate), DateUtils.formatDate(challenge.toDate)).enqueue(new Callback<SwearingStatsResponse>() {
+            @Override
+            public void onResponse(Call<SwearingStatsResponse> call, Response<SwearingStatsResponse> response) {
+                processStats(response.body().stats);
+            }
+
+            @Override
+            public void onFailure(Call<SwearingStatsResponse> call, Throwable t) {
+                totalFines.setText("ERROR YO");
+            }
+        });
     }
 
     @Nullable
@@ -103,6 +135,7 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         totalFines.setVisibility(View.INVISIBLE);
         pieChart.setData(null);
         pieChart.invalidate();
+        totalFine = 0;
         frequencyTable.removeAllViews();
         moneyBagsView.sweepUpDaCash();
         Engine.getInstance().getRetrofitClient().getApi().getSwearingStats(DateUtils.formatDate(challenge.fromDate), DateUtils.formatDate(challenge.toDate)).enqueue(new Callback<SwearingStatsResponse>() {
@@ -176,14 +209,19 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
         totalFines.setVisibility(View.VISIBLE);
         animateText(fine);
-
-        Engine.getInstance().getFineManager().setFineValue(fine);
     }
 
-    private void animateText(int fine){
+    private void animateText(final int fine){
 
         moneyBagsView.makeItRain(fine);
-        ObjectAnimator animator = ObjectAnimator.ofInt(this, "formattedText", 0, fine);
+        ObjectAnimator animator = ObjectAnimator.ofInt(this, "formattedText", totalFine, fine);
+
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                totalFine = fine;
+            }
+        });
 
         animator.setDuration(2000);
         animator.setInterpolator(new DecelerateInterpolator(2));

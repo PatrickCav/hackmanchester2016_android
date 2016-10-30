@@ -35,24 +35,34 @@ public class FineManager {
     private Context context;
 
     private static final String FINE_PREFERENCES = "FINE_PREFERENCES";
-    private static final String FINE_AMOUNT = "FINE_AMOUNT";
+    private static final String SWEAR_COUNT = "SWEAR_COUNT";
 
     private static final int FINE_CONVERSION = 137;
+
+    private FineListener fineListener;
 
     public FineManager(Context context) {
         this.context = context;
     }
 
+    public void setFineListener(FineListener listener){
+        fineListener = listener;
+    }
+
+    public void removeListener(){
+        fineListener = null;
+    }
+
     public int getFineValue() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(FINE_PREFERENCES, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(FINE_AMOUNT, 0);
+        return sharedPreferences.getInt(SWEAR_COUNT, 0);
     }
 
     public void setFineValue(int fine) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(FINE_PREFERENCES, Context.MODE_PRIVATE);
         sharedPreferences
                 .edit()
-                .putInt(FINE_AMOUNT, fine)
+                .putInt(SWEAR_COUNT, fine)
                 .apply();
     }
 
@@ -60,20 +70,18 @@ public class FineManager {
         return (conversion * totalSwears);
     }
 
-    public String getFormattedFine(int fine) {
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-
-        return formatter.format((double)fine/100);
-    }
-
     private void notifyUser(int charge) {
         Log.d(TAG, "Notifying of charge " + charge + "p");
+
+        if(fineListener != null){
+            fineListener.fineUpdated();
+        }
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.icon)
                         .setContentTitle("Wash your mouth out with soap!")
-                        .setContentText("You swore! And it cost you " + getFormattedFine(charge));
+                        .setContentText("You swore, and it cost you!");
 
         Intent resultIntent = new Intent(context, LaunchActivity.class);
 
@@ -95,7 +103,7 @@ public class FineManager {
     }
 
     public void calculateFineDifference() {
-        Engine.getInstance().getRetrofitClient().getApi().getSwearingStats(DateUtils.formatDate(new Date(345678912)), DateUtils.formatDate(new Date())).enqueue(new Callback<SwearingStatsResponse>() {
+        Engine.getInstance().getRetrofitClient().getApi().getSwearingStats(DateUtils.formatDate(new Date(0)), DateUtils.formatDate(new Date())).enqueue(new Callback<SwearingStatsResponse>() {
             @Override
             public void onResponse(Call<SwearingStatsResponse> call, Response<SwearingStatsResponse> response) {
                 List<SwearingStat> stats = response.body().stats;
@@ -105,14 +113,13 @@ public class FineManager {
                     count += stat.count;
                 }
 
-                int newFine = calculateFine(FINE_CONVERSION, count);
-                int oldFine = getFineValue();
+                int oldCount = getFineValue();
 
-                setFineValue(newFine);
+                setFineValue(count);
 
-                Log.d(TAG, oldFine + " - " + newFine);
-                if(newFine > oldFine) {
-                    notifyUser(newFine - oldFine);
+                Log.d(TAG, oldCount + " - " + count);
+                if(count > oldCount) {
+                    notifyUser(count - oldCount);
                 }
             }
 
@@ -120,5 +127,9 @@ public class FineManager {
             public void onFailure(Call<SwearingStatsResponse> call, Throwable t) {
             }
         });
+    }
+
+    public interface FineListener{
+        void fineUpdated();
     }
 }
