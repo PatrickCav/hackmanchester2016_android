@@ -80,7 +80,10 @@ public class RetrofitClient {
         @GET("prod/search/text")
         Call<SwearingStatsResponse> getStats(@Query("challengeId") String id);
 
-        @POST("prod/challenge")
+        //               |
+        //               |
+        // PLS JONNY     V
+        @POST("prod/challange")
         Call<Void> createChallenge(@Body Challenge challenge);
 
         @GET("prod/challange")

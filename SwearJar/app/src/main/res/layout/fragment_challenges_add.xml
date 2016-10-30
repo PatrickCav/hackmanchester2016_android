@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true">
 
     <View
@@ -27,32 +28,105 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/form_container"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical" >
+        android:layout_margin="8dp"
+        app:cardCornerRadius="@dimen/corner_radius">
 
-        <Spinner
-            android:id="@+id/recipient_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:id="@+id/challenge_spinner"
+        <LinearLayout
+            android:id="@+id/form_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp" />
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:animateLayoutChanges="true">
 
-        <FrameLayout
-            android:id="@+id/challenge_complete_button"
-            android:layout_width="160dp"
-            android:layout_height="40dp"
-            android:background="?android:selectableItemBackground">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical">
 
-        </FrameLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recipient:"
+                    android:layout_marginRight="4dp"/>
 
-    </LinearLayout>
+                <Spinner
+                    android:id="@+id/recipient_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_height" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Challenge:"
+                    android:layout_marginRight="4dp"/>
+
+                <Spinner
+                    android:id="@+id/challenge_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_height" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Forfiet:"/>
+
+                <TextView
+                    android:id="@+id/forfeit_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="£123"
+                    android:layout_marginLeft="4dp"/>
+
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/forfeit_seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"/>
+
+
+            <FrameLayout
+                android:id="@+id/challenge_complete_button"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="?android:selectableItemBackground">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save_challenge"
+                    android:layout_gravity="center"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </FrameLayout>

@@ -15,12 +15,20 @@
     <string name="challenged_by">Challenged by:</string>
     <string name="days_remaining">days\nremaining</string>
     <string name="fine">Fine:</string>
+    <string name="save_challenge">Start Challenge!</string>
 
     <!-- Challenges -->
     <string-array name="challenges_type_array">
         <item>No swearing!</item>
         <item>No pubbing!</item>
         <item>Go to the gym!</item>
+    </string-array>
+
+    <!-- Challenges -->
+    <string-array name="challenges_key_array">
+        <item>swearing</item>
+        <item>pub</item>
+        <item>gym</item>
     </string-array>
 
 </resources>
