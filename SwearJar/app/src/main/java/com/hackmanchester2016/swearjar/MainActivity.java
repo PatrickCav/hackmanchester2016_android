@@ -3,6 +3,7 @@ package com.hackmanchester2016.swearjar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -102,5 +103,12 @@ public class MainActivity extends AppCompatActivity {
         transaction.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left, R.anim.slide_in_from_left, R.anim.slide_out_to_right);
         transaction.replace(R.id.container, fragment, null).addToBackStack(null);
         transaction.commit();
+    }
+
+    public void donateNow() {
+        String url = "http://www.cancerresearchuk.org/support-us/donate";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(  Uri.parse(url));
+        startActivity(i);
     }
 }
