@@ -37,7 +37,6 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         adapter = new ChallengesAdapter(this);
-
         super.onCreate(savedInstanceState);
     }
 
