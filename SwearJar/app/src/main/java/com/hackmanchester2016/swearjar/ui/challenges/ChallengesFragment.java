@@ -72,7 +72,6 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
 
     private void requestChallenges() {
         Engine.getInstance().getRetrofitClient().getApi().getChallenges().enqueue(new Callback<ChallengeResponse>() {
-
             @Override
             public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
                 swipeRefreshLayout.setRefreshing(false);
