@@ -24,6 +24,8 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     private TextView challengeTitle;
     private TextView challenger;
+    private TextView challengedBy;
+    private TextView challenged;
     private TextView challengeFine;
     private TextView daysRemaining;
 
@@ -34,6 +36,8 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
 
         challengeTitle = (TextView) itemView.findViewById(R.id.challenge_title);
         challenger = (TextView) itemView.findViewById(R.id.challenger_name);
+        challengedBy = (TextView) itemView.findViewById(R.id.challenged_by);
+        challenged = (TextView) itemView.findViewById(R.id.challenged);
         challengeFine = (TextView) itemView.findViewById(R.id.challenge_fine);
         daysRemaining = (TextView) itemView.findViewById(R.id.days_remaining);
 
@@ -41,10 +45,22 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void setChallenge(Challenge challenge) {
-        challengeTitle.setText(challenge.challengeType);
+    public void setChallengeMy(Challenge challenge) {
         challenger.setText(Engine.getInstance().getUserManager().getUser(challenge.challengerId).displayName);
+        challenged.setVisibility(View.GONE);
 
+        setChallenge(challenge);
+    }
+
+    public void setChallengeFriend(Challenge challenge) {
+        challenger.setText(Engine.getInstance().getUserManager().getUser(challenge.recipientId).displayName);
+        challengedBy.setVisibility(View.GONE);
+
+        setChallenge(challenge);
+    }
+
+    private void setChallenge(Challenge challenge) {
+        challengeTitle.setText(challenge.challengeType);
         challengeFine.setText(NumberFormat.getCurrencyInstance().format((double)challenge.forfeit/100));
 
         long days = (challenge.toDate.getTime() - System.currentTimeMillis())/MILLIS_IN_DAY;

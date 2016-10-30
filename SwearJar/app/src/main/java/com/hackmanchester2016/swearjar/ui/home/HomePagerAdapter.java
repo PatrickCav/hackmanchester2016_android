@@ -4,7 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.hackmanchester2016.swearjar.ui.challenges.ChallengesFragment;
+import com.hackmanchester2016.swearjar.ui.challenges.ChallengesFragmentBase;
+import com.hackmanchester2016.swearjar.ui.challenges.ChallengesFragmentFriends;
+import com.hackmanchester2016.swearjar.ui.challenges.ChallengesFragmentMy;
 
 /**
  * Created by patrickc on 29/10/2016
@@ -12,8 +14,8 @@ import com.hackmanchester2016.swearjar.ui.challenges.ChallengesFragment;
 public class HomePagerAdapter extends FragmentPagerAdapter {
 
     public enum Pages {
-//        STATS,
-        CHALLENGES,
+        CHALLENGES_MY,
+        CHALLENGES_FRIENDS,
         COUNT
     }
 
@@ -24,10 +26,10 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (Pages.values()[position]){
-//            case STATS:
-//                return "Stats";
-            case CHALLENGES:
-                return "Challenges";
+            case CHALLENGES_MY:
+                return ChallengesFragmentMy.TITLE;
+            case CHALLENGES_FRIENDS:
+                return ChallengesFragmentFriends.TITLE;
             default:
                 return null;
         }
@@ -36,10 +38,10 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (Pages.values()[position]){
-//            case STATS:
-//                return SwearingStatsFragment.newInstance();
-            case CHALLENGES:
-                return new ChallengesFragment();
+            case CHALLENGES_MY:
+                return new ChallengesFragmentMy();
+            case CHALLENGES_FRIENDS:
+                return new ChallengesFragmentFriends();
             default:
                 return null;
         }

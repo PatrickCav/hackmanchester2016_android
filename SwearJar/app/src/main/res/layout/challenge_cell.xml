@@ -26,10 +26,19 @@
                 android:textColor="@color/main_text"/>
 
             <TextView
+                android:id="@+id/challenged_by"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/challenger_name"
                 android:text="@string/challenged_by"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/challenged"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/challenger_name"
+                android:text="@string/challenged"
                 android:textSize="12sp"/>
 
             <TextView
