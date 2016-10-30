@@ -3,14 +3,20 @@ package com.hackmanchester2016.swearjar.ui.home;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.webkit.MimeTypeMap;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,12 +32,20 @@ import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStat;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStatsResponse;
 import com.hackmanchester2016.swearjar.engine.managers.FineManager;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,8 +67,10 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
     private PieChart pieChart;
     private MoneyBagsView moneyBagsView;
     private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+    private FloatingActionButton shareButton;
 
     private Challenge challenge;
+    private double totalDonation;
 
     private int totalFine = 0;
 
@@ -72,6 +88,9 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
         Bundle args = getArguments();
         challenge = (Challenge) args.getSerializable(CHALLENGE_ID);
+
+        TwitterAuthConfig authConfig =  new TwitterAuthConfig("consumerKey", "consumerSecret");
+        Fabric.with(getContext(), new TwitterCore(authConfig), new TweetComposer());
     }
 
     @Override
@@ -118,6 +137,8 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         pieChart = (PieChart) view.findViewById(R.id.pie_chart);
         frequencyTable = (LinearLayout) view.findViewById(R.id.frequency_table_layout);
         moneyBagsView = (MoneyBagsView) view.findViewById(R.id.money_bags_view);
+        shareButton = (FloatingActionButton) view.findViewById(R.id.share_button);
+        shareButton.setOnClickListener(shareListener);
 
         view.findViewById(R.id.donate_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,6 +235,7 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
     private void setTotalFine(int totalTimesSworn){
         int fine = Engine.getInstance().getFineManager().calculateFine(challenge.forfeit, totalTimesSworn);
+        totalDonation = fine / 100;
 
         totalFines.setVisibility(View.VISIBLE);
         animateText(fine);
@@ -240,4 +262,28 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         totalFines.setText(numberFormat.format(((double) value)/100));
     }
 
+    private View.OnClickListener shareListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            DecimalFormat df = new DecimalFormat("#.00");
+            String tweet = "Thanks to " + Engine.getInstance().getUserManager().getUser(challenge.challengerId).displayName;
+            tweet += ", I've donated £" + df.format(totalDonation) + " to Cancer Research UK!";
+
+            File myFile = getActivity().getFileStreamPath("CancerResearchLogo.jpeg");
+            Uri uri = Uri.parse(myFile.getAbsolutePath());
+
+            URL donationUrl = null;
+            try {
+                donationUrl = new URL("http://www.cancerresearchuk.org/support-us/donate?gclid=CjwKEAjwtNbABRCsqO7J0_uJxWYSJAAiVo5LonErB4fxQuzGc-0cmK9udbxD7iIOX7WirSHLANEQehoC51Pw_wcB&dclid=CNq26d-ngtACFcyi7QodhyAOVw");
+            } catch (MalformedURLException ex){
+
+            }
+
+            TweetComposer.Builder builder = new TweetComposer.Builder(getContext())
+                    .text(tweet)
+                    .url(donationUrl);
+                    //.image(uri);
+            builder.show();
+        }
+    };
 }
