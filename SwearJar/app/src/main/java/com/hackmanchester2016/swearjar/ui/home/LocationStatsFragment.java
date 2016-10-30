@@ -127,18 +127,22 @@ public class LocationStatsFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void processStats(List<LocationStat> stats){
-        int totalUses = 0;
+        int totalVisits = 0;
+        int fineVisits = 0;
 
         if(stats != null) {
             for (LocationStat stat : stats) {
-                totalUses += stat.count;
+                totalVisits += stat.count;
+                if(stat.place.equals(challenge.challengeType)) {
+                    fineVisits += stat.count;
+                }
             }
             Collections.sort(stats);
             populateFrequencyList(stats);
-            populatePieChart(stats.subList(0, Math.min(stats.size(), 6)), totalUses);
-            setTotalFine(totalUses);
+            populatePieChart(stats.subList(0, Math.min(stats.size(), 6)), totalVisits);
+            setTotalFine(fineVisits);
         } else{
-            totalFines.setText("You haven't sworn yet‽");
+            totalFines.setText("You haven't been anywhere yet‽");
         }
     }
 

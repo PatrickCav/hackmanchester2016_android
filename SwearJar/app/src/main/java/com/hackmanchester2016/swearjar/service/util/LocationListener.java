@@ -108,6 +108,14 @@ public class LocationListener implements android.location.LocationListener {
                 return "bar";
             case Place.TYPE_GYM:
                 return "gym";
+            case Place.TYPE_CASINO:
+                return "casino";
+            case Place.TYPE_MOVIE_THEATER:
+                return "cinema";
+            case Place.TYPE_NIGHT_CLUB:
+                return "club";
+            case Place.TYPE_POST_BOX:
+                return "post_box";
             default:
                 return "other";
         }
