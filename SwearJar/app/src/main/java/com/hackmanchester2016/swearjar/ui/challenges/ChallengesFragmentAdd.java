@@ -24,6 +24,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +44,7 @@ public class ChallengesFragmentAdd extends Fragment {
     private View formContainer;
     private Spinner recipientSpinner;
     private Spinner challengeSpinner;
+    private Spinner lengthSpinner;
 
     private TextView forfeitValue;
     private SeekBar forfeitSeekbar;
@@ -110,11 +112,29 @@ public class ChallengesFragmentAdd extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) { }
         });
 
+        lengthSpinner = (Spinner) view.findViewById(R.id.length_spinner);
+        final int[] challengeLengths = getContext().getResources().getIntArray(R.array.challenges_length_array);
+
+        ArrayAdapter<CharSequence> lengthAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.challenges_length_array, android.R.layout.simple_spinner_item);
+        challengeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lengthSpinner.setAdapter(lengthAdapter);
+        lengthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                long currentTimeMillis = System.currentTimeMillis();
+                challenge.fromDate = new Date(currentTimeMillis);
+                challenge.toDate = new Date(currentTimeMillis + TimeUnit.DAYS.toMillis(challengeLengths[position]));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
         return view;
     }
 
     private void createChallenge() {
-
         if(challenge.challengeType == null ){
             Toast.makeText(getContext(), "Challenge Type pls...", Toast.LENGTH_LONG).show();
             return;
@@ -122,9 +142,6 @@ public class ChallengesFragmentAdd extends Fragment {
             Toast.makeText(getContext(), "Recipient pls...", Toast.LENGTH_LONG).show();
             return;
         }
-
-        challenge.fromDate = new Date(System.currentTimeMillis());
-        challenge.toDate = new Date(System.currentTimeMillis() + 1234567890);
         challenge.forfeit = forfeitSeekbar.getProgress();
 
         Engine.getInstance().getRetrofitClient().getApi().createChallenge(challenge).enqueue(new Callback<Void>() {
@@ -168,7 +185,6 @@ public class ChallengesFragmentAdd extends Fragment {
 
     private void setForfeitvalue(int value){
         forfeitValue.setText(numberFormat.format((double)value/100));
-
     }
 
     @Override
