@@ -12,5 +12,8 @@
     <string name="setup_voice">...Swear Jar also knows when you use some fruity language on a phone call!</string>
     <string name="setup_location_1">...Having a night on the town or just a few down at your local? Swear Jar will also monitor your location and donate a little money whenever you\'re spending money on booze</string>
     <string name="setup_location_2">All of your donations go to Cancer Research UK, together we will beat Cancer</string>
+    <string name="challenged_by">Challenged by:</string>
+    <string name="days_remaining">days\nremaining</string>
+    <string name="fine">Fine:</string>
 
 </resources>

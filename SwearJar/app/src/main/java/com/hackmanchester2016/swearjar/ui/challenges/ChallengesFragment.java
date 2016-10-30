@@ -26,17 +26,17 @@ import retrofit2.Response;
  * Created by dant on 30/10/2016.
  */
 
-public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ChallengesAdapter.ChallengesCallback{
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private FloatingActionButton addChallengeButton;
 
-    private ChallengesFragmentPagerAdapter adapter;
+    private ChallengesAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        adapter = new ChallengesFragmentPagerAdapter();
+        adapter = new ChallengesAdapter(this);
 
         super.onCreate(savedInstanceState);
     }
@@ -103,4 +103,9 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
             }
         }
     };
+
+    @Override
+    public void viewChallengeDetails(Challenge challenge) {
+
+    }
 }
