@@ -11,11 +11,13 @@ import android.util.Log;
 
 import com.hackmanchester2016.swearjar.LaunchActivity;
 import com.hackmanchester2016.swearjar.R;
+import com.hackmanchester2016.swearjar.engine.DateUtils;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStat;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStatsResponse;
 
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -54,12 +56,8 @@ public class FineManager {
                 .apply();
     }
 
-    public int getFineConversion() {
-        return FINE_CONVERSION;
-    }
-
-    public int calculateFine(int totalSwears) {
-        return (FINE_CONVERSION * totalSwears);
+    public int calculateFine(int conversion, int totalSwears) {
+        return (conversion * totalSwears / 100);
     }
 
     public String getFormattedFine(int fine) {
@@ -97,7 +95,7 @@ public class FineManager {
     }
 
     public void calculateFineDifference() {
-        Engine.getInstance().getRetrofitClient().getApi().getSwearingStats("asdfafd").enqueue(new Callback<SwearingStatsResponse>() {
+        Engine.getInstance().getRetrofitClient().getApi().getSwearingStats(DateUtils.formatDate(new Date(345678912)), DateUtils.formatDate(new Date())).enqueue(new Callback<SwearingStatsResponse>() {
             @Override
             public void onResponse(Call<SwearingStatsResponse> call, Response<SwearingStatsResponse> response) {
                 List<SwearingStat> stats = response.body().stats;
@@ -107,7 +105,7 @@ public class FineManager {
                     count += stat.count;
                 }
 
-                int newFine = calculateFine(count);
+                int newFine = calculateFine(FINE_CONVERSION, count);
                 int oldFine = getFineValue();
 
                 setFineValue(newFine);

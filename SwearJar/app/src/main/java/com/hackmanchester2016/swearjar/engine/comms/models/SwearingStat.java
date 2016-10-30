@@ -14,7 +14,7 @@ public class SwearingStat implements Comparable<SwearingStat>{
         return stat;
     }
 
-    @SerializedName("place")
+    @SerializedName("word")
     public String word;
 
     @SerializedName("count")

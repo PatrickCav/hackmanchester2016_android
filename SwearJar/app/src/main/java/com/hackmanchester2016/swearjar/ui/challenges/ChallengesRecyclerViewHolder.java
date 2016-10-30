@@ -69,7 +69,7 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void setChallenge(User user, Challenge challenge) {
-        challengeTitle.setText(challenge.challengeType);
+        challengeTitle.setText(getChallengeType(challenge.challengeType));
         challengeFine.setText(NumberFormat.getCurrencyInstance().format((double)challenge.forfeit/100));
 
         long days = (challenge.toDate.getTime() - System.currentTimeMillis())/MILLIS_IN_DAY;
@@ -84,6 +84,16 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
                 challenegerImage.setImageDrawable(circularBitmapDrawable);
             }
         });
+    }
+
+    private String getChallengeType(String type){
+        switch (type){
+            default:
+            case "swearing":
+                return "No Swearing!";
+            case "pub":
+                return "No Pub!";
+        }
     }
 
     public void setCallback(View.OnClickListener clickListener){

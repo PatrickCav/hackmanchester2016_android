@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.hackmanchester2016.swearjar.R;
+import com.hackmanchester2016.swearjar.engine.DateUtils;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStat;
@@ -104,7 +105,7 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         pieChart.invalidate();
         frequencyTable.removeAllViews();
         moneyBagsView.sweepUpDaCash();
-        Engine.getInstance().getRetrofitClient().getApi().getSwearingStats(challenge.id).enqueue(new Callback<SwearingStatsResponse>() {
+        Engine.getInstance().getRetrofitClient().getApi().getSwearingStats(DateUtils.formatDate(challenge.fromDate), DateUtils.formatDate(challenge.toDate)).enqueue(new Callback<SwearingStatsResponse>() {
             @Override
             public void onResponse(Call<SwearingStatsResponse> call, Response<SwearingStatsResponse> response) {
                 swipeRefreshLayout.setRefreshing(false);
@@ -171,7 +172,7 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void setTotalFine(int totalTimesSworn){
-        int fine = Engine.getInstance().getFineManager().calculateFine(totalTimesSworn);
+        int fine = Engine.getInstance().getFineManager().calculateFine(challenge.forfeit, totalTimesSworn);
 
         totalFines.setVisibility(View.VISIBLE);
         animateText(fine);

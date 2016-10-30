@@ -13,6 +13,7 @@ import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStatsResponse
 import com.hackmanchester2016.swearjar.engine.managers.AuthManager;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.HttpUrl;
@@ -80,13 +81,13 @@ public class RetrofitClient {
         Call<Void> sendText(@Body SendTextRequest body);
 
         @GET("prod/search/text")
-        Call<SwearingStatsResponse> getSwearingStats(@Query("challengeId") String id);
+        Call<SwearingStatsResponse> getSwearingStats(@Query("fromDate") String fromDate, @Query("toDate") String toDate);
 
         @POST("prod/location")
         Call<Void> sendLocation(@Body SendLocationRequest body);
 
-        @GET("prod/search/location")
-        Call<LocationStatsResponse> getLocationStats(@Query("challengeId") String id);
+        @GET("prod/location")
+        Call<LocationStatsResponse> getLocationStats(@Query("fromDate") String fromDate, @Query("toDate") String toDate);
 
         //               |
         //               |

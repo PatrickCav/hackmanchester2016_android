@@ -113,7 +113,7 @@ public class ChallengesFragmentAdd extends Fragment {
         });
 
         lengthSpinner = (Spinner) view.findViewById(R.id.length_spinner);
-        final int[] challengeLengths = getContext().getResources().getIntArray(R.array.challenges_length_array);
+        final int[] challengeLengths = getContext().getResources().getIntArray(R.array.challenges_length_key_array);
 
         ArrayAdapter<CharSequence> lengthAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.challenges_length_array, android.R.layout.simple_spinner_item);
