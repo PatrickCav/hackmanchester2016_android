@@ -20,7 +20,7 @@ public class SetupController {
         this.context = context;
     }
 
-    public void setSetupPreferences(boolean complete) {
+    public void setSetupComplete(boolean complete) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SETUP_PREFERENCES, Context.MODE_PRIVATE);
         sharedPreferences
                 .edit()

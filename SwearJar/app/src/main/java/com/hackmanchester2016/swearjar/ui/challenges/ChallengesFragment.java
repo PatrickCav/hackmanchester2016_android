@@ -98,8 +98,8 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
         @Override
         public void onClick(View view) {
             if(getActivity() instanceof MainActivity) {
-                // TODO Push Add challenge fragment
-                // ((MainActivity) getActivity()).pushDetailsFragment();
+                ((MainActivity) getActivity()).pushDetailsFragment(new ChallengesFragmentAdd(),
+                        ChallengesFragmentAdd.TAG, false);
             }
         }
     };
