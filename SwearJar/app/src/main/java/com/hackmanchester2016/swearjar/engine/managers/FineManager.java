@@ -74,7 +74,7 @@ public class FineManager {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.icon)
-                        .setContentTitle("You twat")
+                        .setContentTitle("Wash your mouth out with soap!")
                         .setContentText("You swore! And it cost you " + getFormattedFine(charge));
 
         Intent resultIntent = new Intent(context, LaunchActivity.class);
