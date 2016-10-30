@@ -3,6 +3,7 @@ package com.hackmanchester2016.swearjar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,5 +72,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    public void pushDetailsFragment(Fragment fragment, String tag, boolean allowDuplicated) {
+        if(allowDuplicated || getSupportFragmentManager().findFragmentByTag(tag) == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.details_container, fragment, tag)
+                    .addToBackStack(tag)
+                    .commit();
+        }
+    }
 }
