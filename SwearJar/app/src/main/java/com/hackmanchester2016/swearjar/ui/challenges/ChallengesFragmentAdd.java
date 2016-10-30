@@ -19,13 +19,25 @@ public class ChallengesFragmentAdd extends Fragment {
 
     public static String TAG = "CHALLENGES_FRAGMENT_ADD";
 
+    private View closeButton;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenges_add, container, false);
 
+        closeButton = view.findViewById(R.id.close_button);
+        closeButton.setOnClickListener(closeClickListener);
+
         return view;
     }
+
+    private View.OnClickListener closeClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            getActivity().onBackPressed();
+        }
+    };
 
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
