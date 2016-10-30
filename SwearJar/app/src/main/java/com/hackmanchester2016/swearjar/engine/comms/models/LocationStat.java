@@ -5,17 +5,17 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by patrickc on 29/10/2016
  */
-public class SwearingStat implements Comparable<SwearingStat>{
+public class LocationStat implements Comparable<LocationStat>{
 
-    public static SwearingStat testStat(){
-        SwearingStat stat = new SwearingStat();
+    public static LocationStat testStat(){
+        LocationStat stat = new LocationStat();
         stat.count = 3;
-        stat.word = "Shittingballs";
+        stat.place = "Shittingballs";
         return stat;
     }
 
     @SerializedName("place")
-    public String word;
+    public String place;
 
     @SerializedName("count")
     public int count;
@@ -23,11 +23,11 @@ public class SwearingStat implements Comparable<SwearingStat>{
 
     @Override
     public String toString() {
-        return word + " count: " + count;
+        return place + " count: " + count;
     }
 
     @Override
-    public int compareTo(SwearingStat o) {
+    public int compareTo(LocationStat o) {
         return o.count - count;
     }
 }

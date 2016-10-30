@@ -97,7 +97,7 @@ public class FineManager {
     }
 
     public void calculateFineDifference() {
-        Engine.getInstance().getRetrofitClient().getApi().getStats("asdfafd").enqueue(new Callback<SwearingStatsResponse>() {
+        Engine.getInstance().getRetrofitClient().getApi().getSwearingStats("asdfafd").enqueue(new Callback<SwearingStatsResponse>() {
             @Override
             public void onResponse(Call<SwearingStatsResponse> call, Response<SwearingStatsResponse> response) {
                 List<SwearingStat> stats = response.body().stats;
