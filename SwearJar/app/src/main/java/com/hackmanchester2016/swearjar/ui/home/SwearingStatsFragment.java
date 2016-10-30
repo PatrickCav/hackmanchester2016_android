@@ -129,7 +129,7 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         for(int i = 0; i < stats.size(); i++){
             stat = stats.get(i);
             entries.add(new PieEntry(100 * (stat.count /((float) total)), stat.word));
-            colours.add(COLOURS[i%6]);
+            colours.add(getContext().getResources().getColor(COLOURS[i%6]));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Swearing Stats");
