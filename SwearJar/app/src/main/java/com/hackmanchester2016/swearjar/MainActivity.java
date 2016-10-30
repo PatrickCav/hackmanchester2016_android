@@ -83,11 +83,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void pushFragment(Fragment fragment){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, fragment, null)
-                .addToBackStack(null);
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left, R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+        transaction.replace(R.id.container, fragment, null).addToBackStack(null);
         transaction.commit();
     }
 }
