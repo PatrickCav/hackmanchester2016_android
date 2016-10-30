@@ -13,12 +13,12 @@ import java.util.List;
  * Created by dant on 30/10/2016.
  */
 
-public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesRecyclerViewHolder> {
+public abstract class ChallengesAdapterBase extends RecyclerView.Adapter<ChallengesRecyclerViewHolder> {
 
     private List<Challenge> challenges;
     private ChallengesCallback callback;
 
-    public ChallengesAdapter(ChallengesCallback callback){
+    public ChallengesAdapterBase(ChallengesCallback callback){
         this.callback = callback;
     }
 
@@ -34,18 +34,12 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(final ChallengesRecyclerViewHolder holder, int position) {
-        holder.setChallenge(challenges.get(position));
-        holder.setCallback(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                if(position != RecyclerView.NO_POSITION) {
-                    callback.viewChallengeDetails(challenges.get(position));
-                }
-            }
-        });
+    public void onBindViewHolder(ChallengesRecyclerViewHolder holder, int position) {
+        bindContentView(holder, position, challenges.get(position), callback);
     }
+
+    protected abstract void bindContentView(ChallengesRecyclerViewHolder holder, int position,
+                                            Challenge challenge, ChallengesCallback callback);
 
     @Override
     public int getItemCount() {

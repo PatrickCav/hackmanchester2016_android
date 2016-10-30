@@ -30,6 +30,8 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     private TextView challengeTitle;
     private TextView challenger;
+    private TextView challengedBy;
+    private TextView challenged;
     private TextView challengeFine;
     private TextView daysRemaining;
     private ImageView challenegerImage;
@@ -41,18 +43,33 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
 
         challengeTitle = (TextView) itemView.findViewById(R.id.challenge_title);
         challenger = (TextView) itemView.findViewById(R.id.challenger_name);
+        challengedBy = (TextView) itemView.findViewById(R.id.challenged_by);
+        challenged = (TextView) itemView.findViewById(R.id.challenged);
         challengeFine = (TextView) itemView.findViewById(R.id.challenge_fine);
         daysRemaining = (TextView) itemView.findViewById(R.id.days_remaining);
+        challenegerImage = (ImageView) itemView.findViewById(R.id.challenger_image);
 
         clickableForeground = itemView.findViewById(R.id.selectable_foreground);
     }
 
-    public void setChallenge(Challenge challenge) {
-        challengeTitle.setText(challenge.challengeType);
-
+    public void setChallengeMy(Challenge challenge) {
         User user = Engine.getInstance().getUserManager().getUser(challenge.challengerId);
-        challenger.setText(user.displayName);
+        challenger.setText(Engine.getInstance().getUserManager().getUser(challenge.challengerId).displayName);
+        challenged.setVisibility(View.GONE);
 
+        setChallenge(user, challenge);
+    }
+
+    public void setChallengeFriend(Challenge challenge) {
+        User user = Engine.getInstance().getUserManager().getUser(challenge.recipientId);
+        challenger.setText(user.displayName);
+        challengedBy.setVisibility(View.GONE);
+
+        setChallenge(user, challenge);
+    }
+
+    private void setChallenge(User user, Challenge challenge) {
+        challengeTitle.setText(challenge.challengeType);
         challengeFine.setText(NumberFormat.getCurrencyInstance().format((double)challenge.forfeit/100));
 
         long days = (challenge.toDate.getTime() - System.currentTimeMillis())/MILLIS_IN_DAY;

@@ -16,6 +16,7 @@
     <string name="setup_location_1">...Having a night on the town or just a few down at your local? Swear Jar will also monitor your location and donate a little money whenever you\'re spending money on booze</string>
     <string name="setup_location_2">All of your donations go to Cancer Research UK, together we will beat Cancer</string>
     <string name="challenged_by">Challenged by:</string>
+    <string name="challenged">You challenged:</string>
     <string name="days_remaining">days\nremaining</string>
     <string name="fine">Fine:</string>
     <string name="save_challenge">Start Challenge!</string>
@@ -27,11 +28,23 @@
         <item>Go to the gym!</item>
     </string-array>
 
-    <!-- Challenges -->
     <string-array name="challenges_key_array">
         <item>swearing</item>
         <item>pub</item>
         <item>gym</item>
     </string-array>
+
+    <!-- Challenges length -->
+    <string-array name="challenges_length_array">
+        <item>7 days</item>
+        <item>14 days</item>
+        <item>30 days</item>
+    </string-array>
+
+    <integer-array name="challenges_length_key_array">
+        <item>7</item>
+        <item>14</item>
+        <item>30</item>
+    </integer-array>
 
 </resources>

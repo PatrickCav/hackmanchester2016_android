@@ -13,33 +13,27 @@ import android.view.ViewGroup;
 
 import com.hackmanchester2016.swearjar.MainActivity;
 import com.hackmanchester2016.swearjar.R;
-import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
-import com.hackmanchester2016.swearjar.engine.comms.models.ChallengeResponse;
 import com.hackmanchester2016.swearjar.ui.home.LocationStatsFragment;
 import com.hackmanchester2016.swearjar.ui.home.SwearingStatsFragment;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 /**
  * Created by dant on 30/10/2016.
  */
 
-public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ChallengesAdapter.ChallengesCallback{
+public abstract class ChallengesFragmentBase extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ChallengesAdapterBase.ChallengesCallback{
 
-    private SwipeRefreshLayout swipeRefreshLayout;
+    protected SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private FloatingActionButton addChallengeButton;
 
-    private ChallengesAdapter adapter;
+    private ChallengesAdapterBase adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        adapter = new ChallengesAdapter(this);
+        adapter = getAdapter(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -68,27 +62,14 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void processChallenges(List<Challenge> challenges) {
+    protected void processChallenges(List<Challenge> challenges) {
         adapter.setChallenges(challenges);
         adapter.notifyDataSetChanged();
     }
 
-    private void requestChallenges() {
-        Engine.getInstance().getRetrofitClient().getApi().getChallenges().enqueue(new Callback<ChallengeResponse>() {
-            @Override
-            public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
-                swipeRefreshLayout.setRefreshing(false);
-                if(response.body() != null) {
-                    processChallenges(response.body().results);
-                }
-            }
+    protected abstract ChallengesAdapterBase getAdapter(ChallengesAdapterBase.ChallengesCallback callback);
 
-            @Override
-            public void onFailure(Call<ChallengeResponse> call, Throwable t) {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-    }
+    protected abstract void requestChallenges();
 
     @Override
     public void onRefresh() {

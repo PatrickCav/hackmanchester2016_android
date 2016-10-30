@@ -95,7 +95,9 @@ public class RetrofitClient {
         Call<Void> createChallenge(@Body Challenge challenge);
 
         @GET("prod/challange")
-        Call<ChallengeResponse> getChallenges();
+        Call<ChallengeResponse> getMyChallenges();
 
+        @GET("prod/setchallenger")
+        Call<ChallengeResponse> getFriendsChallenges();
     }
 }
