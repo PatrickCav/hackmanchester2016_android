@@ -52,7 +52,7 @@ public class TextMessageService extends Service {
         Engine.getInstance().getRetrofitClient().getApi().sendText(new SendTextRequest(body)).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d(TAG, "SUCCESS");
+                Engine.getInstance().getFineManager().calculateFineDifference();
             }
 
             @Override

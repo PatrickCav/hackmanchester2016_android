@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,6 @@ import retrofit2.Response;
 public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "SwearingStats";
-
-    private static final double FINE_CONVERSION = 137.035999;
 
     private static final int[] COLOURS = {R.color.pie_0, R.color.pie_1, R.color.pie_2, R.color.pie_3, R.color.pie_4, R.color.pie_5};
 
@@ -130,7 +129,7 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         for(int i = 0; i < stats.size(); i++){
             stat = stats.get(i);
             entries.add(new PieEntry(100 * (stat.count /((float) total)), stat.word));
-            colours.add(COLOURS[i%4]);
+            colours.add(getContext().getResources().getColor(COLOURS[i%6]));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Swearing Stats");
@@ -142,10 +141,12 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void setTotalFine(int totalTimesSworn){
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        int fine = Engine.getInstance().getFineManager().calculateFine(totalTimesSworn);
 
         totalFines.setVisibility(View.VISIBLE);
-        totalFines.setText(formatter.format((FINE_CONVERSION/100) * totalTimesSworn));
+        totalFines.setText(Engine.getInstance().getFineManager().getFormattedFine(fine));
+
+        Engine.getInstance().getFineManager().setFineValue(fine);
     }
 
     private void animateText(int fine){

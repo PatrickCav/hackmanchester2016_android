@@ -8,6 +8,7 @@ import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStatsResponse
 import com.hackmanchester2016.swearjar.engine.managers.AuthManager;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -15,6 +16,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
@@ -70,7 +72,6 @@ public class RetrofitClient {
 
         @GET("prod/search/text")
         Call<SwearingStatsResponse> getStats();
-
         @GET("prod/challenge")
         Call<ChallengeResponse> getChallenges();
 

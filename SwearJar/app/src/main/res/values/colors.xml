@@ -20,5 +20,7 @@
     <color name="pie_4">#7986CB</color>
     <color name="pie_5">#FFB74D</color>
 
+    <color name="start_shadow">#00000000</color>
+    <color name="end_shadow">#AA000000</color>
 
 </resources>

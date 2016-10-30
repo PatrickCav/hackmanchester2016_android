@@ -68,5 +68,6 @@ public class CallListeningService extends Service {
         super.onDestroy();
 
         micManager.stopListening();
+        micManager.destroy();
     }
 }

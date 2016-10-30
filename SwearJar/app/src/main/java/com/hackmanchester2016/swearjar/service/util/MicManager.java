@@ -46,12 +46,10 @@ public class MicManager {
 
         @Override
         public void onRmsChanged(float v) {
-            Log.d(TAG, "onRmsChanged");
         }
 
         @Override
         public void onBufferReceived(byte[] bytes) {
-            Log.d(TAG, "onBufferReceived");
         }
 
         @Override
@@ -93,7 +91,6 @@ public class MicManager {
 
         @Override
         public void onEvent(int i, Bundle bundle) {
-            Log.d(TAG, "onEvent");
         }
     };
 
@@ -103,7 +100,11 @@ public class MicManager {
         mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
         mSpeechRecognizer.setRecognitionListener(mRecognitionListener);
 
-        mIntent = new Intent();
+        mIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        mIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        mIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
+                context.getPackageName());
         mIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, Integer.MAX_VALUE);
         mIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, Integer.MAX_VALUE);
         mIntent.putExtra("android.speech.extra.DICTATION_MODE", true);
@@ -119,6 +120,9 @@ public class MicManager {
     public void stopListening() {
         stopClicked = true;
         mSpeechRecognizer.stopListening();
+    }
+
+    public void destroy() {
         mSpeechRecognizer.destroy();
     }
 }
