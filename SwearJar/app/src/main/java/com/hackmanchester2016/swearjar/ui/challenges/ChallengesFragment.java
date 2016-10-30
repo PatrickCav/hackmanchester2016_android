@@ -53,7 +53,7 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
         recyclerView.setAdapter(adapter);
 
         addChallengeButton = (FloatingActionButton) view.findViewById(R.id.add_challenge);
-        addChallengeButton.setOnClickListener(addChallangeListener);
+        addChallengeButton.setOnClickListener(addChallengeListener);
 
         return view;
     }
@@ -94,7 +94,7 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
         requestChallenges();
     }
 
-    private FloatingActionButton.OnClickListener addChallangeListener = new FloatingActionButton.OnClickListener() {
+    private FloatingActionButton.OnClickListener addChallengeListener = new FloatingActionButton.OnClickListener() {
         @Override
         public void onClick(View view) {
             if(getActivity() instanceof MainActivity) {

@@ -37,6 +37,9 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
     private static final String TAG = "SwearingStats";
 
+    private static final String CHALLENGE_ID = "challengeId";
+
+
     private static final int[] COLOURS = {R.color.pie_0, R.color.pie_1, R.color.pie_2, R.color.pie_3, R.color.pie_4, R.color.pie_5};
 
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -46,8 +49,22 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
     private MoneyBagsView moneyBagsView;
     private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 
-    public static SwearingStatsFragment newInstance(){
-        return new SwearingStatsFragment();
+    private String challengeId;
+
+    public static SwearingStatsFragment newInstance(String challengeId){
+        SwearingStatsFragment fragment = new SwearingStatsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(CHALLENGE_ID, challengeId);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        challengeId = args.getString(CHALLENGE_ID);
     }
 
     @Nullable
@@ -87,7 +104,7 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         pieChart.invalidate();
         frequencyTable.removeAllViews();
         moneyBagsView.sweepUpDaCash();
-        Engine.getInstance().getRetrofitClient().getApi().getStats().enqueue(new Callback<SwearingStatsResponse>() {
+        Engine.getInstance().getRetrofitClient().getApi().getStats(challengeId).enqueue(new Callback<SwearingStatsResponse>() {
             @Override
             public void onResponse(Call<SwearingStatsResponse> call, Response<SwearingStatsResponse> response) {
                 swipeRefreshLayout.setRefreshing(false);
