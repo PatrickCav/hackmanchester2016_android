@@ -35,7 +35,7 @@ public class SetupFragmentLocation extends Fragment {
         @Override
         public void onClick(View view) {
             if(getActivity() instanceof SetupActivity) {
-                Engine.getInstance().getSetupController().setupComplete();
+                Engine.getInstance().getSetupController().setSetupComplete(true);
                 ((SetupActivity)getActivity()).setupComplete();
             }
         }

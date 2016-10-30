@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
         viewPager = (ViewPager) view.findViewById(R.id.home_view_pager);
         tabLayout = (TabLayout) view.findViewById(R.id.tab_bar);
 
-        viewPager.setAdapter(new HomePagerAdapter(getFragmentManager()));
+        viewPager.setAdapter(new HomePagerAdapter(getChildFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
     }
 

@@ -4,10 +4,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.hackmanchester2016.swearjar.ui.challenges.ChallengesFragment;
+
 /**
  * Created by patrickc on 29/10/2016
  */
-public class HomePagerAdapter extends FragmentPagerAdapter{
+public class HomePagerAdapter extends FragmentPagerAdapter {
+
+    public enum Pages {
+        STATS,
+        CHALLENGES,
+        COUNT
+    }
 
     public HomePagerAdapter(FragmentManager fragmentManager){
         super(fragmentManager);
@@ -15,9 +23,11 @@ public class HomePagerAdapter extends FragmentPagerAdapter{
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position){
-            case 0:
+        switch (Pages.values()[position]){
+            case STATS:
                 return "Stats";
+            case CHALLENGES:
+                return "Challenges";
             default:
                 return null;
         }
@@ -25,9 +35,11 @@ public class HomePagerAdapter extends FragmentPagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0:
+        switch (Pages.values()[position]){
+            case STATS:
                 return SwearingStatsFragment.newInstance();
+            case CHALLENGES:
+                return new ChallengesFragment();
             default:
                 return null;
         }
@@ -35,6 +47,6 @@ public class HomePagerAdapter extends FragmentPagerAdapter{
 
     @Override
     public int getCount() {
-        return 1;
+        return Pages.COUNT.ordinal();
     }
 }

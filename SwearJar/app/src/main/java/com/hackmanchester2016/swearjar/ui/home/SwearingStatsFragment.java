@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -41,7 +41,9 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView totalFines;
+    private LinearLayout frequencyTable;
     private PieChart pieChart;
+    private MoneyBagsView moneyBagsView;
     private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 
     public static SwearingStatsFragment newInstance(){
@@ -63,8 +65,11 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
         totalFines = (TextView) view.findViewById(R.id.total_fines_text);
         pieChart = (PieChart) view.findViewById(R.id.pie_chart);
+        frequencyTable = (LinearLayout) view.findViewById(R.id.frequency_table_layout);
+        moneyBagsView = (MoneyBagsView) view.findViewById(R.id.money_bags_view);
 
         pieChart.setDescription(null);
+        pieChart.setNoDataText(null);
         pieChart.getLegend().setEnabled(false);
 
         onRefresh();
@@ -78,6 +83,10 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
     private void requestFines() {
         totalFines.setVisibility(View.INVISIBLE);
+        pieChart.setData(null);
+        pieChart.invalidate();
+        frequencyTable.removeAllViews();
+        moneyBagsView.sweepUpDaCash();
         Engine.getInstance().getRetrofitClient().getApi().getStats().enqueue(new Callback<SwearingStatsResponse>() {
             @Override
             public void onResponse(Call<SwearingStatsResponse> call, Response<SwearingStatsResponse> response) {
@@ -100,17 +109,13 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
             for (SwearingStat stat : stats) {
                 totalUses += stat.count;
             }
-            populatePieChart(orderData(stats), totalUses);
+            Collections.sort(stats);
+            populateFrequencyList(stats);
+            populatePieChart(stats.subList(0, Math.min(stats.size(), 6)), totalUses);
             setTotalFine(totalUses);
         } else{
             totalFines.setText("You haven't sworn yet‽");
         }
-    }
-
-    private List<SwearingStat> orderData(List<SwearingStat> list){
-        Collections.sort(list);
-        // Max of 6 (six) swears
-        return list.subList(0, Math.min(list.size(), 6));
     }
 
     private void populatePieChart(List<SwearingStat> stats, int total) {
@@ -140,16 +145,26 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         pieChart.invalidate();
     }
 
+    private void populateFrequencyList(List<SwearingStat> stats){
+        frequencyTable.removeAllViews();
+
+        for(SwearingStat stat : stats){
+            frequencyTable.addView(new FrequencyRow(getContext(), stat.word, Integer.toString(stat.count)));
+        }
+    }
+
     private void setTotalFine(int totalTimesSworn){
         int fine = Engine.getInstance().getFineManager().calculateFine(totalTimesSworn);
 
         totalFines.setVisibility(View.VISIBLE);
-        totalFines.setText(Engine.getInstance().getFineManager().getFormattedFine(fine));
+        animateText(fine);
 
         Engine.getInstance().getFineManager().setFineValue(fine);
     }
 
     private void animateText(int fine){
+
+        moneyBagsView.makeItRain(fine);
         ObjectAnimator animator = ObjectAnimator.ofInt(this, "formattedText", 0, fine);
 
         animator.setDuration(2000);
