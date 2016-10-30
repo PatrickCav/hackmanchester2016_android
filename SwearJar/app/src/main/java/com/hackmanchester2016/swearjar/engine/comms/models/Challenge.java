@@ -11,10 +11,16 @@ import java.util.Date;
 public class Challenge {
 
     @SerializedName("id")
-    private String challengerId;
+    public String id;
+
+    @SerializedName("challengerId")
+    public String challengerId;
 
     @SerializedName("recipientId")
     public String recipientId;
+
+    @SerializedName("type")
+    public String challengeType;
 
     @SerializedName("forfeit")
     public int forfeit;

@@ -99,4 +99,13 @@ public class UserManager implements ChildEventListener {
     private boolean isNotCurrentUser(User user){
         return user.userId != null && !user.userId.equals(currentUserId);
     }
+
+    public User getUser(String challengerId) {
+        for(User user : users){
+            if(user.userId.equals(challengerId)){
+                return user;
+            }
+        }
+        return null;
+    }
 }

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,18 +27,17 @@ import retrofit2.Response;
  * Created by dant on 30/10/2016.
  */
 
-public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ChallengesAdapter.ChallengesCallback{
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private FloatingActionButton addChallengeButton;
 
-    private ChallengesFragmentPagerAdapter adapter;
+    private ChallengesAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        adapter = new ChallengesFragmentPagerAdapter();
-
+        adapter = new ChallengesAdapter(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -50,6 +50,7 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
         swipeRefreshLayout.setOnRefreshListener(this);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
         addChallengeButton = (FloatingActionButton) view.findViewById(R.id.add_challenge);
@@ -72,7 +73,6 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
 
     private void requestChallenges() {
         Engine.getInstance().getRetrofitClient().getApi().getChallenges().enqueue(new Callback<ChallengeResponse>() {
-
             @Override
             public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
                 swipeRefreshLayout.setRefreshing(false);
@@ -103,4 +103,9 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
             }
         }
     };
+
+    @Override
+    public void viewChallengeDetails(Challenge challenge) {
+
+    }
 }
