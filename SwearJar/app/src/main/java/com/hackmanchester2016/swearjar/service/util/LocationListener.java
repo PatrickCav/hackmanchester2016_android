@@ -10,12 +10,19 @@ import android.util.Log;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
+import com.hackmanchester2016.swearjar.engine.Engine;
+import com.hackmanchester2016.swearjar.engine.comms.models.SendLocationRequest;
 
 import java.io.IOException;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by tomr on 30/10/2016.
@@ -77,12 +84,34 @@ public class LocationListener implements android.location.LocationListener {
                     String placeName = mostLikely == null ? null : mostLikely.getPlace().getName().toString();
                     List<Integer> placeTypes = mostLikely.getPlace().getPlaceTypes();
 
+                    for(int p : placeTypes) {
+                        if(p == Place.TYPE_BAR || p == Place.TYPE_GYM) {
+                            String placeType = p == Place.TYPE_BAR ? "Bar" : "Gym";
+                            SendLocationRequest req = new SendLocationRequest(placeName, placeType);
+                            sendLocation(req);
+                            break;
+                        }
+                    }
 
                     likelyPlaces.release();
                 }
             });
         } else {
         }
+    }
+
+    private void sendLocation(SendLocationRequest req) {
+        Engine.getInstance().getRetrofitClient().getApi().sendLocation(req).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d(TAG, "SUCCESS");
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d(TAG, "FAIL");
+            }
+        });
     }
 
     @Override
