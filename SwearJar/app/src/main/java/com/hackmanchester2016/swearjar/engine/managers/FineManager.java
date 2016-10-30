@@ -57,7 +57,7 @@ public class FineManager {
     }
 
     public int calculateFine(int conversion, int totalSwears) {
-        return (conversion * totalSwears / 100);
+        return (conversion * totalSwears);
     }
 
     public String getFormattedFine(int fine) {
