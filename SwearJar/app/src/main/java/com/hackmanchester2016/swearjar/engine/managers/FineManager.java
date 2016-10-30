@@ -110,6 +110,8 @@ public class FineManager {
                 int newFine = calculateFine(count);
                 int oldFine = getFineValue();
 
+                setFineValue(newFine);
+
                 Log.d(TAG, oldFine + " - " + newFine);
                 if(newFine > oldFine) {
                     notifyUser(newFine - oldFine);
