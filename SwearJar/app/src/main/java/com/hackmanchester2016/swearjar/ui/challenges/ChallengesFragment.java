@@ -16,6 +16,7 @@ import com.hackmanchester2016.swearjar.R;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
 import com.hackmanchester2016.swearjar.engine.comms.models.ChallengeResponse;
+import com.hackmanchester2016.swearjar.ui.home.SwearingStatsFragment;
 
 import java.util.List;
 
@@ -106,6 +107,6 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void viewChallengeDetails(Challenge challenge) {
-
+        ((MainActivity) getActivity()).pushFragment(SwearingStatsFragment.newInstance(challenge.challengerId));
     }
 }
