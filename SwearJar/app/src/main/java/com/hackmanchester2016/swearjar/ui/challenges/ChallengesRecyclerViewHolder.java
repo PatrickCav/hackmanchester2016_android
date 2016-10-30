@@ -9,8 +9,10 @@ import android.widget.TextView;
 import com.hackmanchester2016.swearjar.R;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
+import com.hackmanchester2016.swearjar.engine.comms.models.User;
 
 import java.text.NumberFormat;
+import java.util.List;
 
 /**
  * Created by dant on 30/10/2016.

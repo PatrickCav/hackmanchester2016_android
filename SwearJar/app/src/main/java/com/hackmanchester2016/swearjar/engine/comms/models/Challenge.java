@@ -11,6 +11,9 @@ import java.util.Date;
 public class Challenge {
 
     @SerializedName("id")
+    public String id;
+
+    @SerializedName("challengerId")
     public String challengerId;
 
     @SerializedName("recipientId")

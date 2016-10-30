@@ -123,6 +123,7 @@ public class ChallengesFragmentAdd extends Fragment {
             return;
         }
 
+        challenge.fromDate = new Date(System.currentTimeMillis());
         challenge.toDate = new Date(System.currentTimeMillis() + 1234567890);
         challenge.forfeit = forfeitSeekbar.getProgress();
 
