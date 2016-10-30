@@ -1,11 +1,17 @@
 package com.hackmanchester2016.swearjar.ui.challenges;
 
+import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.hackmanchester2016.swearjar.R;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
@@ -26,6 +32,7 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
     private TextView challenger;
     private TextView challengeFine;
     private TextView daysRemaining;
+    private ImageView challenegerImage;
 
     private View clickableForeground;
 
@@ -42,12 +49,24 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public void setChallenge(Challenge challenge) {
         challengeTitle.setText(challenge.challengeType);
-        challenger.setText(Engine.getInstance().getUserManager().getUser(challenge.challengerId).displayName);
+
+        User user = Engine.getInstance().getUserManager().getUser(challenge.challengerId);
+        challenger.setText(user.displayName);
 
         challengeFine.setText(NumberFormat.getCurrencyInstance().format((double)challenge.forfeit/100));
 
         long days = (challenge.toDate.getTime() - System.currentTimeMillis())/MILLIS_IN_DAY;
         daysRemaining.setText(Long.toString(days));
+
+        Glide.with(challenegerImage.getContext()).load(user.displayIcon).asBitmap().centerCrop().into(new BitmapImageViewTarget(challenegerImage) {
+            @Override
+            protected void setResource(Bitmap resource) {
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(challenegerImage.getContext().getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                challenegerImage.setImageDrawable(circularBitmapDrawable);
+            }
+        });
     }
 
     public void setCallback(View.OnClickListener clickListener){

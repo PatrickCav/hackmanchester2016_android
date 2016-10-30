@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.hackmanchester2016.swearjar.R;
 import com.hackmanchester2016.swearjar.engine.Engine;
+import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStat;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStatsResponse;
 
@@ -39,7 +40,6 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
     private static final String CHALLENGE_ID = "challengeId";
 
-
     private static final int[] COLOURS = {R.color.pie_0, R.color.pie_1, R.color.pie_2, R.color.pie_3, R.color.pie_4, R.color.pie_5};
 
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -49,12 +49,12 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
     private MoneyBagsView moneyBagsView;
     private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 
-    private String challengeId;
+    private Challenge challenge;
 
-    public static SwearingStatsFragment newInstance(String challengeId){
+    public static SwearingStatsFragment newInstance(Challenge challenge){
         SwearingStatsFragment fragment = new SwearingStatsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(CHALLENGE_ID, challengeId);
+        bundle.putSerializable(CHALLENGE_ID, challenge);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -64,7 +64,7 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        challengeId = args.getString(CHALLENGE_ID);
+        challenge = (Challenge) args.getSerializable(CHALLENGE_ID);
     }
 
     @Nullable
@@ -104,7 +104,7 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         pieChart.invalidate();
         frequencyTable.removeAllViews();
         moneyBagsView.sweepUpDaCash();
-        Engine.getInstance().getRetrofitClient().getApi().getStats(challengeId).enqueue(new Callback<SwearingStatsResponse>() {
+        Engine.getInstance().getRetrofitClient().getApi().getStats(challenge.id).enqueue(new Callback<SwearingStatsResponse>() {
             @Override
             public void onResponse(Call<SwearingStatsResponse> call, Response<SwearingStatsResponse> response) {
                 swipeRefreshLayout.setRefreshing(false);

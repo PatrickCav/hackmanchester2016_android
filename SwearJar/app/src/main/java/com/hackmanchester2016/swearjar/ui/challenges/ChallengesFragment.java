@@ -107,6 +107,6 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void viewChallengeDetails(Challenge challenge) {
-        ((MainActivity) getActivity()).pushFragment(SwearingStatsFragment.newInstance(challenge.challengerId));
+        ((MainActivity) getActivity()).pushFragment(SwearingStatsFragment.newInstance(challenge));
     }
 }

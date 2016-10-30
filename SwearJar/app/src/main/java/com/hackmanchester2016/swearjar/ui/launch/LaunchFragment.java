@@ -36,6 +36,7 @@ public class LaunchFragment extends Fragment {
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
+                        .setIsSmartLockEnabled(false)
                         .setTheme(R.style.LoginTheme)
                         .setProviders(AuthUI.GOOGLE_PROVIDER)
                         .build(), RC_SIGN_IN);

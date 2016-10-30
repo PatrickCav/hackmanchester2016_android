@@ -3,6 +3,7 @@ package com.hackmanchester2016.swearjar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.service.LocationService;
 import com.hackmanchester2016.swearjar.service.TextMessageService;
@@ -46,14 +49,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(){
-        Engine.getInstance().getAuthManager().signOut();
-        stopServices();
+        Engine.getInstance().getAuthManager().signOut(this, new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                stopServices();
 
-        Intent intent = new Intent(this, LaunchActivity.class);
-        intent.setData(getIntent().getData());
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+                Intent intent = new Intent(MainActivity.this, LaunchActivity.class);
+                intent.setData(getIntent().getData());
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void startServices() {
