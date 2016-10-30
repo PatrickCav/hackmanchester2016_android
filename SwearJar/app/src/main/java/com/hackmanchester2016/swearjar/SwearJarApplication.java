@@ -6,6 +6,22 @@ import com.hackmanchester2016.swearjar.engine.Engine;
 
 /**
  * Created by dant on 29/10/2016.
+ *
+ *
+ *                     /-----^\
+ *                    /==     |
+ *                +-o/   ==B) |
+ *                   /__/-----|
+ *                      =====
+ *                      ( \ \ \
+ *                       \ \ \ \
+ *                        ( ) ( )
+ *                        / /  \ \
+ *                      / /     | |
+ *                      /        |
+ *                    _^^oo    _^^oo
+ *
+ *
  */
 
 public class SwearJarApplication extends Application {
