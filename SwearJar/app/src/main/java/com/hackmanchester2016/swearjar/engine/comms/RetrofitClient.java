@@ -1,6 +1,7 @@
 package com.hackmanchester2016.swearjar.engine.comms;
 
 import com.hackmanchester2016.swearjar.engine.Engine;
+import com.hackmanchester2016.swearjar.engine.comms.models.ChallengeResponse;
 import com.hackmanchester2016.swearjar.engine.comms.models.SendTextRequest;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStat;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStatsResponse;
@@ -69,6 +70,9 @@ public class RetrofitClient {
 
         @GET("prod/search/text")
         Call<SwearingStatsResponse> getStats();
+
+        @GET("prod/challenge")
+        Call<ChallengeResponse> getChallenges();
 
     }
 }
