@@ -2,13 +2,14 @@ package com.hackmanchester2016.swearjar.engine.comms.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by dant on 30/10/2016.
  */
 
-public class Challenge {
+public class Challenge implements Serializable{
 
     @SerializedName("id")
     public String id;

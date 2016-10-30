@@ -25,19 +25,28 @@
                 android:textStyle="bold"
                 android:textColor="@color/main_text"/>
 
+            <ImageView
+                android:id="@+id/challenger_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="8dp"/>
+
             <TextView
                 android:id="@+id/challenged_by"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/challenger_name"
                 android:text="@string/challenged_by"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:layout_toRightOf="@id/challenger_image"/>
 
             <TextView
                 android:id="@+id/challenged"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/challenger_name"
+                android:layout_toRightOf="@id/challenger_image"
                 android:text="@string/challenged"
                 android:textSize="12sp"/>
 
@@ -47,7 +56,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 tools:text="Patrick Cavanagh"
-                android:textColor="@color/main_text"/>
+                android:textColor="@color/main_text"
+                android:layout_toRightOf="@id/challenger_image"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

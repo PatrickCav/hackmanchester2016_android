@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
 import com.hackmanchester2016.swearjar.engine.comms.models.ChallengeResponse;
+import com.hackmanchester2016.swearjar.engine.comms.models.LocationStatsResponse;
+import com.hackmanchester2016.swearjar.engine.comms.models.SendLocationRequest;
 import com.hackmanchester2016.swearjar.engine.comms.models.SendTextRequest;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStat;
 import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStatsResponse;
@@ -78,7 +80,13 @@ public class RetrofitClient {
         Call<Void> sendText(@Body SendTextRequest body);
 
         @GET("prod/search/text")
-        Call<SwearingStatsResponse> getStats(@Query("challengeId") String id);
+        Call<SwearingStatsResponse> getSwearingStats(@Query("challengeId") String id);
+
+        @POST("prod/location")
+        Call<Void> sendLocation(@Body SendLocationRequest body);
+
+        @GET("prod/search/location")
+        Call<LocationStatsResponse> getLocationStats(@Query("challengeId") String id);
 
         //               |
         //               |

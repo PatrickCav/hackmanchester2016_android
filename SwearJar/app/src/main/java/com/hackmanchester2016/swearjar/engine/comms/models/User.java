@@ -7,11 +7,13 @@ public class User {
 
     public User(){}
 
-    public User(String userId, String displayName){
+    public User(String userId, String displayName, String displayIcon){
         this.userId = userId;
         this.displayName = displayName;
+        this.displayIcon = displayIcon;
     }
 
+    public String displayIcon;
     public String userId;
     public String displayName;
 

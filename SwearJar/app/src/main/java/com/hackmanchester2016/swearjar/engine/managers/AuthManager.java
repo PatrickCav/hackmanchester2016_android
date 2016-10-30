@@ -1,5 +1,13 @@
 package com.hackmanchester2016.swearjar.engine.managers;
 
+import android.app.Activity;
+import android.support.annotation.NonNull;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hackmanchester2016.swearjar.engine.comms.models.User;
@@ -25,13 +33,15 @@ public class AuthManager {
     public User getUser(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
-            return new User(user.getUid(), user.getDisplayName());
+            return new User(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString());
         } else{
             return null;
         }
     }
 
-    public void signOut(){
+    public void signOut(Activity activity, OnCompleteListener listener) {
         FirebaseAuth.getInstance().signOut();
+
+        AuthUI.getInstance().signOut(activity).addOnCompleteListener(listener);
     }
 }

@@ -19,8 +19,8 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.hackmanchester2016.swearjar.R;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
-import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStat;
-import com.hackmanchester2016.swearjar.engine.comms.models.SwearingStatsResponse;
+import com.hackmanchester2016.swearjar.engine.comms.models.LocationStat;
+import com.hackmanchester2016.swearjar.engine.comms.models.LocationStatsResponse;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -32,11 +32,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by patrickc on 29/10/2016
+ * Created by patrickc on 30/10/2016
  */
-public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-
-    private static final String TAG = "SwearingStats";
+public class LocationStatsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String CHALLENGE_ID = "challengeId";
 
@@ -51,8 +49,8 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
     private Challenge challenge;
 
-    public static SwearingStatsFragment newInstance(Challenge challenge){
-        SwearingStatsFragment fragment = new SwearingStatsFragment();
+    public static LocationStatsFragment newInstance(Challenge challenge){
+        LocationStatsFragment fragment = new LocationStatsFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(CHALLENGE_ID, challenge);
         fragment.setArguments(bundle);
@@ -104,26 +102,26 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         pieChart.invalidate();
         frequencyTable.removeAllViews();
         moneyBagsView.sweepUpDaCash();
-        Engine.getInstance().getRetrofitClient().getApi().getSwearingStats(challenge.id).enqueue(new Callback<SwearingStatsResponse>() {
+        Engine.getInstance().getRetrofitClient().getApi().getLocationStats(challenge.id).enqueue(new Callback<LocationStatsResponse>() {
             @Override
-            public void onResponse(Call<SwearingStatsResponse> call, Response<SwearingStatsResponse> response) {
+            public void onResponse(Call<LocationStatsResponse> call, Response<LocationStatsResponse> response) {
                 swipeRefreshLayout.setRefreshing(false);
                 processStats(response.body().stats);
             }
 
             @Override
-            public void onFailure(Call<SwearingStatsResponse> call, Throwable t) {
+            public void onFailure(Call<LocationStatsResponse> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
                 totalFines.setText("ERROR YO");
             }
         });
     }
 
-    private void processStats(List<SwearingStat> stats){
+    private void processStats(List<LocationStat> stats){
         int totalUses = 0;
 
         if(stats != null) {
-            for (SwearingStat stat : stats) {
+            for (LocationStat stat : stats) {
                 totalUses += stat.count;
             }
             Collections.sort(stats);
@@ -135,7 +133,7 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         }
     }
 
-    private void populatePieChart(List<SwearingStat> stats, int total) {
+    private void populatePieChart(List<LocationStat> stats, int total) {
 
         if(total == 0){
             pieChart.setVisibility(View.GONE);
@@ -147,10 +145,10 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         List<PieEntry> entries = new ArrayList<>();
         List<Integer> colours = new ArrayList<>();
 
-        SwearingStat stat;
+        LocationStat stat;
         for(int i = 0; i < stats.size(); i++){
             stat = stats.get(i);
-            entries.add(new PieEntry(100 * (stat.count /((float) total)), stat.word));
+            entries.add(new PieEntry(100 * (stat.count /((float) total)), stat.place));
             colours.add(getContext().getResources().getColor(COLOURS[i%6]));
         }
 
@@ -162,11 +160,11 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
         pieChart.invalidate();
     }
 
-    private void populateFrequencyList(List<SwearingStat> stats){
+    private void populateFrequencyList(List<LocationStat> stats){
         frequencyTable.removeAllViews();
 
-        for(SwearingStat stat : stats){
-            frequencyTable.addView(new FrequencyRow(getContext(), stat.word, Integer.toString(stat.count)));
+        for(LocationStat stat : stats){
+            frequencyTable.addView(new FrequencyRow(getContext(), stat.place, Integer.toString(stat.count)));
         }
     }
 
@@ -192,5 +190,6 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
     public void setFormattedText(int value){
         totalFines.setText(numberFormat.format(((double) value)/100));
     }
+
 
 }

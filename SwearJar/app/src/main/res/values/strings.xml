@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="facebook_application_id" translatable="false">208957562875395</string>
+
     <string name="app_name">Swear Jar</string>
     <string name="your_total_fines">Your fines so far...</string>
     <string name="sign_out">Sign out</string>
