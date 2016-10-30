@@ -2,6 +2,7 @@ package com.hackmanchester2016.swearjar.ui.challenges;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hackmanchester2016.swearjar.MainActivity;
 import com.hackmanchester2016.swearjar.R;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.Challenge;
@@ -28,6 +30,8 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
+    private FloatingActionButton addChallengeButton;
+
     private ChallengesFragmentPagerAdapter adapter;
 
     @Override
@@ -47,6 +51,9 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
+
+        addChallengeButton = (FloatingActionButton) view.findViewById(R.id.add_challenge);
+        addChallengeButton.setOnClickListener(addChallangeListener);
 
         return view;
     }
@@ -69,7 +76,9 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
             @Override
             public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
                 swipeRefreshLayout.setRefreshing(false);
-                processChallenges(response.body().results);
+                if(response.body() != null) {
+                    processChallenges(response.body().results);
+                }
             }
 
             @Override
@@ -84,4 +93,14 @@ public class ChallengesFragment extends Fragment implements SwipeRefreshLayout.O
         swipeRefreshLayout.setRefreshing(true);
         requestChallenges();
     }
+
+    private FloatingActionButton.OnClickListener addChallangeListener = new FloatingActionButton.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(getActivity() instanceof MainActivity) {
+                // TODO Push Add challenge fragment
+                // ((MainActivity) getActivity()).pushDetailsFragment();
+            }
+        }
+    };
 }
