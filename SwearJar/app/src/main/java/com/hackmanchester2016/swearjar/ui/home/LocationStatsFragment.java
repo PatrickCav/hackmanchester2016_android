@@ -16,6 +16,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.hackmanchester2016.swearjar.MainActivity;
 import com.hackmanchester2016.swearjar.R;
 import com.hackmanchester2016.swearjar.engine.DateUtils;
 import com.hackmanchester2016.swearjar.engine.Engine;
@@ -84,6 +85,13 @@ public class LocationStatsFragment extends Fragment implements SwipeRefreshLayou
         frequencyTable = (LinearLayout) view.findViewById(R.id.frequency_table_layout);
         moneyBagsView = (MoneyBagsView) view.findViewById(R.id.money_bags_view);
 
+        view.findViewById(R.id.donate_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).donateNow();
+            }
+        });
+
         pieChart.setDescription(null);
         pieChart.setNoDataText(null);
         pieChart.getLegend().setEnabled(false);
@@ -107,7 +115,7 @@ public class LocationStatsFragment extends Fragment implements SwipeRefreshLayou
             @Override
             public void onResponse(Call<LocationStatsResponse> call, Response<LocationStatsResponse> response) {
                 swipeRefreshLayout.setRefreshing(false);
-                processStats(response.body().stats);
+                processStats(response.body().results);
             }
 
             @Override

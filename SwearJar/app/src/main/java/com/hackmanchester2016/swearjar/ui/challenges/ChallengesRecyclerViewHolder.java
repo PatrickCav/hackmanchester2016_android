@@ -92,7 +92,9 @@ public class ChallengesRecyclerViewHolder extends RecyclerView.ViewHolder {
             case "swearing":
                 return "No Swearing!";
             case "pub":
-                return "No Pub!";
+                return "No more Pub trips!";
+            case "gym":
+                return "Go to the Gym!";
         }
     }
 

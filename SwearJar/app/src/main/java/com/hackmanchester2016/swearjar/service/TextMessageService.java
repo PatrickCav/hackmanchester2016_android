@@ -13,6 +13,8 @@ import android.util.Log;
 import com.hackmanchester2016.swearjar.engine.Engine;
 import com.hackmanchester2016.swearjar.engine.comms.models.SendTextRequest;
 
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,6 +72,9 @@ public class TextMessageService extends Service {
 
         @Override
         public void onChange(boolean selfChange) {
+
+            Log.d(TAG, "onChange() called with: selfChange = [" + selfChange + "]");
+
             try (Cursor cur = getContentResolver().query(Uri.parse(SMS_CONTENT), null, null, null, null)) {
                 cur.moveToNext(); // Assume they have some messages haha banter
 

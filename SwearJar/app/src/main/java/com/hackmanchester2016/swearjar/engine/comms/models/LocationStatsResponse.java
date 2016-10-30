@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class LocationStatsResponse {
 
-    @SerializedName("stats")
-    public List<LocationStat> stats;
+    @SerializedName("results")
+    public List<LocationStat> results;
 
 }

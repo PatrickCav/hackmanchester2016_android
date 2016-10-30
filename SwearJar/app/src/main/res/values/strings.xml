@@ -20,6 +20,7 @@
     <string name="days_remaining">days\nremaining</string>
     <string name="fine">Fine:</string>
     <string name="save_challenge">Start Challenge!</string>
+    <string name="donate_now">Donate\nNow</string>
 
     <!-- Challenges -->
     <string-array name="challenges_type_array">

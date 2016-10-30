@@ -85,8 +85,8 @@ public class LocationListener implements android.location.LocationListener {
                     List<Integer> placeTypes = mostLikely.getPlace().getPlaceTypes();
 
                     for(int p : placeTypes) {
-                        if(p == Place.TYPE_BAR || p == Place.TYPE_GYM) {
-                            String placeType = p == Place.TYPE_BAR ? "Bar" : "Gym";
+                        String placeType = getPlaceName(p);
+                        if(placeName != null) {
                             SendLocationRequest req = new SendLocationRequest(placeName, placeType);
                             sendLocation(req);
                             break;
@@ -97,6 +97,19 @@ public class LocationListener implements android.location.LocationListener {
                 }
             });
         } else {
+        }
+    }
+
+    private String getPlaceName(int place){
+        switch (place){
+            case Place.TYPE_MUSEUM:
+                return "museum";
+            case Place.TYPE_BAR:
+                return "bar";
+            case Place.TYPE_GYM:
+                return "gym";
+            default:
+                return "other";
         }
     }
 

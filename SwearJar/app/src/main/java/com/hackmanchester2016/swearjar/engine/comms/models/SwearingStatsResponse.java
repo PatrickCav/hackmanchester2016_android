@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class SwearingStatsResponse {
 
-    @SerializedName("stats")
+    @SerializedName("results")
     public List<SwearingStat> stats;
 
 }
