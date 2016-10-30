@@ -22,7 +22,9 @@ import com.hackmanchester2016.swearjar.engine.Engine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by patrickc on 29/10/2016
@@ -52,15 +54,16 @@ public class HomeFragment extends Fragment {
         bytearrayoutputstream = new ByteArrayOutputStream();
         Drawable drawable = getResources().getDrawable(R.drawable.cancer_research_logo);
         Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 60, bytearrayoutputstream);
-        file = new File(Environment.getExternalStorageDirectory() + "/CancerResearchLogo.jpg");
 
         try {
-            file.createNewFile();
-            fileoutputstream = new FileOutputStream(file);
-            fileoutputstream.write(bytearrayoutputstream.toByteArray());
-            fileoutputstream.close();
-        } catch (Exception e) {
+            File cachePath = new File(getContext().getCacheDir(), "images");
+            cachePath.mkdirs(); // don't forget to make the directory
+            FileOutputStream stream = new FileOutputStream(cachePath + "/image.png"); // overwrites this image every time
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            stream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -269,8 +269,9 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
             String tweet = "Thanks to " + Engine.getInstance().getUserManager().getUser(challenge.challengerId).displayName;
             tweet += ", I've donated £" + df.format(totalDonation) + " to Cancer Research UK!";
 
-            File myFile = getActivity().getFileStreamPath("CancerResearchLogo.jpeg");
-            Uri uri = Uri.parse(myFile.getAbsolutePath());
+            File imagePath = new File(getContext().getCacheDir(), "images");
+            File newFile = new File(imagePath, "image.png");
+            Uri contentUri = FileProvider.getUriForFile(getContext(), "com.hackmanchester2016.swearjar.fileProvider", newFile);
 
             URL donationUrl = null;
             try {
@@ -281,8 +282,8 @@ public class SwearingStatsFragment extends Fragment implements SwipeRefreshLayou
 
             TweetComposer.Builder builder = new TweetComposer.Builder(getContext())
                     .text(tweet)
-                    .url(donationUrl);
-                    //.image(uri);
+                    .url(donationUrl)
+                    .image(contentUri);
             builder.show();
         }
     };
