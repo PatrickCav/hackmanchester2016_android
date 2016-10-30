@@ -12,6 +12,12 @@
         <item name="android:windowBackground">@drawable/login_background</item>
 	</style>
 
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <declare-styleable name="MaterialPageIndicator">
         <attr name="emptyStateColor" format="color"/>
         <attr name="filledStateColor" format="color"/>
@@ -25,6 +31,7 @@
     </style>
 
     <style name="SetupText">
+        <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
         <item name="android:textColor">#FFFFFF</item>

@@ -72,7 +72,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:text="Let's Go"
+        android:text="Let's Go!"
+        android:background="@drawable/button"
+        android:textColor="@color/white"
         android:layout_below="@id/text_layout"/>
 
 </RelativeLayout>
